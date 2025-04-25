@@ -33,7 +33,7 @@
         "max_tokens": 2000
       },
       "litellm": {
-        "url": "http://10.10.10.10:4000/v1/chat/completions",
+        "url": "http://localhost:4000/v1/chat/completions",
         "api_key": "YOUR_LITELLM_API_KEY",
         "model": "gemini-2.0-flash",
         "model_refiner": "gpt-4.1-mini",
