@@ -1,0 +1,9 @@
+AI.md
+TODO.md
+*.pyc
+.pytest_cache/
+tmp/
+test_files/
+uploads/*
+config.json
+.env
