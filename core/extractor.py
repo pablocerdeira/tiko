@@ -24,8 +24,10 @@ class Extractor:
 
     def extract_text_from_file(self, file_path):
         file_name, file_extension = os.path.splitext(file_path)
-        # Document types: use Tika for text extraction
-        if file_extension.lower() in ['.pdf', '.docx', '.xlsx', '.html', '.md', '.txt']:
+        # Document types: use Tika for text extraction; for HTML use the /tika/main endpoint
+        if file_extension.lower() in ['.html', '.htm']:
+            return self._extract_text_with_tika_main(file_path)
+        elif file_extension.lower() in ['.pdf', '.docx', '.xlsx', '.md', '.txt']:
             return self._extract_text_with_tika(file_path)
         # Images: use Tika with OCR
         elif file_extension.lower() in ['.jpeg', '.jpg', '.png', '.gif']:
@@ -54,6 +56,21 @@ class Extractor:
                 resp2.raise_for_status()
                 return resp2.text
             return text
+        except requests.exceptions.RequestException as e:
+            print(f"Erro ao conectar com o Tika: {e}")
+            return None
+
+    def _extract_text_with_tika_main(self, file_path):
+        """Extract plain text from HTML using Tika's /tika/main endpoint as fallback for HTML documents."""
+        try:
+            url_fallback = self.tika_url.rstrip('/') + '/tika/main'
+            with open(file_path, 'rb') as f2:
+                resp2 = requests.put(url_fallback, headers={'Accept': 'text/plain'}, data=f2)
+            resp2.raise_for_status()
+            return resp2.text
+        except requests.exceptions.RequestException as e:
+            print(f"Erro ao conectar com o Tika (Fallback HTML): {e}")
+            return None
         except requests.exceptions.RequestException as e:
             print(f"Erro ao conectar com o Tika: {e}")
             return None
@@ -92,3 +109,10 @@ class Extractor:
         except Exception as e:
             print(f"Error during Whisper transcription: {e}")
             return None
+        finally:
+            try:
+                import torch
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+            except Exception as e:
+                print(f"Error during CUDA cache emptying: {e}")

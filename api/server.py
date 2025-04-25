@@ -65,23 +65,40 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+import requests
+
+def get_input_file(req):
+    """Obtém o arquivo de entrada a partir do request. Se houver o campo 'url' no formulário e for uma URL, baixa o conteúdo e salva em um arquivo temporário. Caso contrário, utiliza request.files['file']."""
+    url = req.form.get('url', '').strip()
+    if url and url.startswith(('http://', 'https://')):
+        filename = url.rstrip('/').split('/')[-1] or 'downloaded_content'
+        filename = secure_filename(filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        try:
+            r = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"})
+            r.raise_for_status()
+            with open(file_path, 'wb') as f:
+                f.write(r.content)
+            return file_path
+        except Exception as e:
+            print(f"Error downloading file from url {url}: {e}")
+            return None
+    elif 'file' in req.files and req.files['file'].filename:
+        file_obj = req.files['file']
+        filename = secure_filename(file_obj.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_obj.save(file_path)
+        return file_path
+    else:
+        return None
 
 @app.route('/summary', methods=['POST'])
 def summarize():
-    # Handle file upload
-    if 'file' not in request.files:
-        msg = 'No file uploaded'
+    # Obter arquivo a partir do campo 'file' ou da URL fornecida via form ('url')
+    file_path = get_input_file(request)
+    if not file_path:
+        msg = 'Nenhum arquivo ou URL válido foi fornecido'
         return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
-
-    file = request.files['file']
-
-    if file.filename == '':
-        msg = 'No file selected'
-        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
-
-    filename = secure_filename(file.filename)
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    file.save(file_path)
 
     # Retrieve optional overrides
     model_override = request.args.get('model')
@@ -100,10 +117,24 @@ def summarize():
     result = sch.summarize_file(file_path)
     # Clean up upload
     # Fix encoding issues before cleaning up the upload
-    summary = fix_encoding(summary)
+    result = fix_encoding(result)
     os.remove(file_path)
     # Return plain text summary, preserving accents
-    return summary, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+    return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
+@app.route('/extract', methods=['POST'])
+def extract():
+    file_path = get_input_file(request)
+    if not file_path:
+        msg = 'Nenhum arquivo ou URL válido foi fornecido'
+        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    result = summarizer.extractor.extract_text_from_file(file_path)
+    if not result:
+        result = 'Não foi possível extrair texto do arquivo.'
+    result = fix_encoding(result)
+    os.remove(file_path)
+    return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 @app.route('/health', methods=['GET'])
 def health():
