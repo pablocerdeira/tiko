@@ -2,7 +2,7 @@
 
 Tiko is a powerful hub designed to efficiently process files and documents. Its name is a playful nod to Apache Tika, reflecting its deep integration with Tika's extraction and OCR capabilities. It supports advanced text extraction from a variety of document formats, robust OCR on images, and high-quality audio transcription via Whisper, which can run both locally and remotely.
 
-This system serves as an essential backend service for chat bots, document management systems, automated email processing, and more. It even supports processing massive documents through chunking strategies – for example, a PDF with over 2000 pages can be divided into chunks, each summarized by an economical LLM, with a final refined summary produced by a more advanced LLM to optimize costs.
+This system serves as an essential backend service for chat bots, document management systems, automated email processing, and more. It supports processing massive documents through advanced chunking strategies – for example, a PDF with over 2000 pages is automatically divided into manageable chunks, each summarized separately, with the intermediate summaries then combined and refined using a more sophisticated LLM. This multi-stage approach ensures efficient processing while maintaining high-quality output, even for documents exceeding 20MB in size.
  
  ## Features
  
@@ -16,6 +16,7 @@ This system serves as an essential backend service for chat bots, document manag
  
  - **/summary**: Accepts a file or URL (via form field `file` or `url`) and returns a concise summary using a configurable LLM.
  - **/extract**: Accepts a file or URL and returns the extracted text without summarization.
+ - **/json**: Accepts a file or URL and returns an ontological JSON structure based on the document type.
  - **/health**: Returns the status of the server.
  
 ## Configuration
@@ -172,11 +173,19 @@ curl -X POST -F "file=@/path/to/image.png" http://<server-address>:<port>/extrac
 
 ### Custom Request Overrides
 
+#### Summary Endpoint Overrides
+
 The /summary endpoint supports per-request customization of the LLM settings via URL query parameters. You can override default LLM settings as follows:
 
  - ?model=<model_name> : Overrides the default LLM model. For example, if you want to use 'gpt-4' for a specific request, append ?model=gpt-4 to the URL.
 
  - ?api_key=<your_api_key> : Provides a specific API key for the LLM provider for that request. This is useful if you want to use dynamic credentials.
+
+#### JSON Endpoint Overrides
+
+The /json endpoint supports the following parameter:
+
+ - ?type=<document_type> : Suggests the document type for more accurate JSON generation. Possible values include 'contrato', 'decisao', 'leis_normas', 'parecer', 'peticao', or 'geral'.
 
 For example, to override both the model and API key, you can use:
 
@@ -201,4 +210,4 @@ Tiko is designed to run on systems with Python 3.8+ and is compatible with vario
 
 This project is open source. See LICENSE for more information.
  
- version: 0.3.1
+ version: 0.4.1
