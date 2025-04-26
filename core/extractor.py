@@ -36,7 +36,8 @@ class Extractor:
         elif file_extension.lower() in ['.mp3', '.wav', '.m4a', '.flac', '.aac', '.ogg', '.opus']:
             return self._extract_text_with_whisper(file_path)
         else:
-            return "Unsupported file format"
+            print(f"Unsupported file format: {file_extension}")
+            return None
 
     def _extract_text_with_tika(self, file_path):
         """
@@ -57,7 +58,7 @@ class Extractor:
                 return resp2.text
             return text
         except requests.exceptions.RequestException as e:
-            print(f"Erro ao conectar com o Tika: {e}")
+            print(f"Error connecting to Tika: {e}")
             return None
 
     def _extract_text_with_tika_main(self, file_path):
@@ -69,10 +70,7 @@ class Extractor:
             resp2.raise_for_status()
             return resp2.text
         except requests.exceptions.RequestException as e:
-            print(f"Erro ao conectar com o Tika (Fallback HTML): {e}")
-            return None
-        except requests.exceptions.RequestException as e:
-            print(f"Erro ao conectar com o Tika: {e}")
+            print(f"Error connecting to Tika (HTML Fallback): {e}")
             return None
 
     def _extract_text_with_tika_ocr(self, file_path):
@@ -96,12 +94,13 @@ class Extractor:
                 return resp2.text
             return text
         except requests.exceptions.RequestException as e:
-            print(f"Erro ao conectar com o Tika (OCR): {e}")
+            print(f"Error connecting to Tika (OCR): {e}")
             return None
 
     def _extract_text_with_whisper(self, file_path):
         if not (self.whisper_enabled and self.whisper_model):
-            return "Whisper transcription not available"
+            print("Whisper transcription not available")
+            return None
         try:
             # Transcribe audio locally
             result = self.whisper_model.transcribe(file_path, language=self.whisper_language)

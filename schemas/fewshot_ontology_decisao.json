@@ -1,0 +1,91 @@
+{
+  "descricao": "Estrutura para classificação de decisões judiciais",
+  "modelo": {
+    "numero_processo": "NNNNNNN-NN.NNNN.N.NN.NNNN",
+    "tribunal": "Nome completo do tribunal",
+    "data": "DD/MM/AAAA",
+    "partes": {
+      "autor": "Nome da parte autora",
+      "reu": "Nome da parte ré",
+      "terceiros_interessados": ["Nome do terceiro interessado 1", "Nome do terceiro interessado 2"]
+    },
+    "magistrado": "Nome do juiz ou relator",
+    "resumo_decisao": "Texto resumido contendo o teor principal da decisão judicial",
+    "legislacao_citada": [
+      {
+        "tipo": "Lei",
+        "numero": "NNNNN/AAAA",
+        "artigos": ["Art. X", "Art. Y, inciso Z"]
+      },
+      {
+        "tipo": "Código",
+        "numero": "Nome do código",
+        "artigos": ["Art. X", "Art. Y, § N"]
+      }
+    ],
+    "jurisprudencia_citada": [
+      {
+        "tipo": "Súmula",
+        "numero": "NNN",
+        "tribunal": "STF/STJ/etc",
+        "trecho_citado": "Texto da súmula ou trecho relevante"
+      },
+      {
+        "tipo": "Precedente",
+        "numero_processo": "NNNNNNN-NN.NNNN.N.NN.NNNN",
+        "tribunal": "Nome do tribunal",
+        "trecho_citado": "Trecho citado do precedente"
+      }
+    ],
+    "dispositivo": "Parte final decisória do documento judicial",
+    "tipo_decisao": "Sentença/Acórdão/Decisão interlocutória/etc",
+    "resultado": "Procedente/Improcedente/Parcialmente procedente/etc",
+    "assunto": "Classificação CNJ do assunto processual",
+    "palavras_chave": ["palavra1", "palavra2", "palavra3"]
+  },
+  "exemplo": [
+    {
+      "numero_processo": "1234567-89.2024.8.19.0001",
+      "tribunal": "Tribunal de Justiça do Estado do Rio de Janeiro",
+      "data": "01/01/2024",
+      "partes": {
+        "autor": "João da Silva",
+        "reu": "Empresa ABC Ltda.",
+        "terceiros_interessados": ["Seguradora XYZ S/A"]
+      },
+      "magistrado": "Maria Oliveira",
+      "resumo_decisao": "Condenação da empresa ré ao pagamento de indenização por danos morais e materiais decorrentes de falha na prestação de serviços.",
+      "legislacao_citada": [
+        {
+          "tipo": "Lei",
+          "numero": "8078/1990",
+          "artigos": ["Art. 14", "Art. 39, inciso VIII"]
+        },
+        {
+          "tipo": "Código",
+          "numero": "Código Civil",
+          "artigos": ["Art. 186", "Art. 927"]
+        }
+      ],
+      "jurisprudencia_citada": [
+        {
+          "tipo": "Súmula",
+          "numero": "543",
+          "tribunal": "STJ",
+          "trecho_citado": "Na hipótese do art. 475-J do CPC, é desnecessária a intimação do devedor para o cumprimento da sentença."
+        },
+        {
+          "tipo": "Precedente",
+          "numero_processo": "7654321-98.2023.8.19.0001",
+          "tribunal": "TJRJ",
+          "trecho_citado": "A falha na prestação de serviços gera dano moral in re ipsa."
+        }
+      ],
+      "dispositivo": "Ante o exposto, julgo PROCEDENTE o pedido para condenar a parte ré ao pagamento de R$ 10.000,00 a título de danos morais e R$ 5.000,00 por danos materiais, com juros de 1% ao mês desde a citação e correção monetária desde o evento danoso.",
+      "tipo_decisao": "Sentença",
+      "resultado": "Procedente",
+      "assunto": "7761 - Responsabilidade Civil / Indenização por Dano Moral",
+      "palavras_chave": ["dano moral", "falha na prestação de serviço", "código de defesa do consumidor"]
+    }
+  ]
+}

@@ -80,9 +80,9 @@ class Summarizer:
         final_word_limit = int(self.llm.max_tokens * 0.75)
         words_summary = summary.split()
         if len(words_summary) > final_word_limit:
-            prompt = ("A partir do resumo a seguir, produza um resumo final que seja coeso e completo, incluindo todos os pontos relevantes, "
-                      "nomes dos principais envolvidos, e mantendo os detalhes importantes, de preferência mantendo a cronologia, mas eliminando repetições e informações redundantes ou desnecessárias."
-                      "Resumo: " + summary)
+            prompt = ("From the summary below, produce a final summary that is cohesive and complete, including all relevant points, "
+                      "names of main parties involved, and maintaining important details, preferably maintaining chronology, but eliminating repetitions and redundant or unnecessary information. "
+                      "Summary: " + summary)
             final_summary = self.llm.summarize(prompt)
             if final_summary:
                 summary = final_summary

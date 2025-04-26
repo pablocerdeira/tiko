@@ -4,6 +4,17 @@ from werkzeug.utils import secure_filename
 import os
 import json
 from core.summarizer import Summarizer
+
+def fix_encoding_recursive(data):
+    # Applies fix_encoding recursively to strings inside dicts and lists
+    if isinstance(data, str):
+        return fix_encoding(data)
+    elif isinstance(data, dict):
+        return {key: fix_encoding_recursive(value) for key, value in data.items()}
+    elif isinstance(data, list):
+        return [fix_encoding_recursive(item) for item in data]
+    else:
+        return data
 import chardet
 
 def fix_encoding(text):
@@ -52,9 +63,9 @@ def monitor_config():
                     config = new_config
                     summarizer = Summarizer(config)
                     config_mtime = current_mtime
-                    print('Config updated')
+                    print('Configuration updated')
         except Exception as e:
-            print('Error monitoring config:', e)
+            print(f'Error monitoring config: {e}')
             time.sleep(1)
 
 config_thread = threading.Thread(target=monitor_config, daemon=True)
@@ -68,7 +79,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 import requests
 
 def get_input_file(req):
-    """Obtém o arquivo de entrada a partir do request. Se houver o campo 'url' no formulário e for uma URL, baixa o conteúdo e salva em um arquivo temporário. Caso contrário, utiliza request.files['file']."""
+    """Gets the input file from the request. If there is a 'url' field in the form and it's a URL, downloads the content and saves it to a temporary file. Otherwise, uses request.files['file']."""
     url = req.form.get('url', '').strip()
     if url and url.startswith(('http://', 'https://')):
         filename = url.rstrip('/').split('/')[-1] or 'downloaded_content'
@@ -81,7 +92,7 @@ def get_input_file(req):
                 f.write(r.content)
             return file_path
         except Exception as e:
-            print(f"Error downloading file from url {url}: {e}")
+            print(f"Error downloading file from URL {url}: {e}")
             return None
     elif 'file' in req.files and req.files['file'].filename:
         file_obj = req.files['file']
@@ -94,10 +105,10 @@ def get_input_file(req):
 
 @app.route('/summary', methods=['POST'])
 def summarize():
-    # Obter arquivo a partir do campo 'file' ou da URL fornecida via form ('url')
+    # Get file from 'file' field or URL provided via form ('url')
     file_path = get_input_file(request)
     if not file_path:
-        msg = 'Nenhum arquivo ou URL válido foi fornecido'
+        msg = 'No valid file or URL provided'
         return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
 
     # Retrieve optional overrides
@@ -113,25 +124,21 @@ def summarize():
     else:
         sch = summarizer
 
-    # Always perform summarization on /summary endpoint
     result = sch.summarize_file(file_path)
-    # Clean up upload
-    # Fix encoding issues before cleaning up the upload
     result = fix_encoding(result)
     os.remove(file_path)
-    # Return plain text summary, preserving accents
     return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 @app.route('/extract', methods=['POST'])
 def extract():
     file_path = get_input_file(request)
     if not file_path:
-        msg = 'Nenhum arquivo ou URL válido foi fornecido'
+        msg = 'No valid file or URL provided'
         return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
 
     result = summarizer.extractor.extract_text_from_file(file_path)
     if not result:
-        result = 'Não foi possível extrair texto do arquivo.'
+        result = 'Unable to extract text from file.'
     result = fix_encoding(result)
     os.remove(file_path)
     return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
@@ -139,6 +146,91 @@ def extract():
 @app.route('/health', methods=['GET'])
 def health():
     return jsonify({'status': 'ok'})
+
+@app.route('/json', methods=['POST'])
+def json_response():
+    # Get file from 'file' field or via URL
+    file_path = get_input_file(request)
+    if not file_path:
+        msg = 'No valid file or URL provided'
+        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    # Extract text from file
+    text = summarizer.extractor.extract_text_from_file(file_path)
+    if not text:
+        os.remove(file_path)
+        msg = 'Could not extract text from file for JSON generation.'
+        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    # Generate JSON object using few-shot templates
+    from core.json import generate_json
+    try:
+        # Use the type parameter from request args if provided
+        graph_type = request.args.get('type', '')
+        result = generate_json(summarizer.llm, text, graph_type)
+        if result is None:
+            os.remove(file_path)
+            msg = 'Error generating JSON from extracted text.'
+            return msg, 500, {'Content-Type': 'text/plain; charset=utf-8'}
+    except Exception as e:
+        os.remove(file_path)
+        msg = f'Error during JSON generation: {str(e)}'
+        return msg, 500, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    # Apply recursive encoding fix if applicable
+    result = fix_encoding_recursive(result) if result else result
+
+    os.remove(file_path)
+
+    import json
+    if isinstance(result, dict):
+        response_json = json.dumps(result, indent=2, ensure_ascii=False)
+        return response_json, 200, {'Content-Type': 'application/json; charset=utf-8'}
+    else:
+        return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
+@app.route('/graph', methods=['POST'])
+def graph_response():
+    # Get file from 'file' field or via URL
+    file_path = get_input_file(request)
+    if not file_path:
+        msg = 'No valid file or URL provided'
+        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    # Extract text from file
+    text = summarizer.extractor.extract_text_from_file(file_path)
+    if not text:
+        os.remove(file_path)
+        msg = 'Could not extract text from file for graph generation.'
+        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    # Generate graph using GraphGenerator
+    from core.graph import GraphGenerator
+    try:
+        # Use the type parameter from request args if provided
+        graph_type = request.args.get('type', '')
+        graph_generator = GraphGenerator(summarizer.llm)
+        result = graph_generator.generate_graph(text, graph_type)
+        if result is None:
+            os.remove(file_path)
+            msg = 'Error generating graph from extracted text.'
+            return msg, 500, {'Content-Type': 'text/plain; charset=utf-8'}
+    except Exception as e:
+        os.remove(file_path)
+        msg = f'Error during graph generation: {str(e)}'
+        return msg, 500, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    # Apply recursive encoding fix if applicable
+    result = fix_encoding_recursive(result) if result else result
+
+    os.remove(file_path)
+
+    import json
+    if isinstance(result, dict):
+        response_json = json.dumps(result, indent=2, ensure_ascii=False)
+        return response_json, 200, {'Content-Type': 'application/json; charset=utf-8'}
+    else:
+        return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 if __name__ == '__main__':
     srv = config.get('server', {})

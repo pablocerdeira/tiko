@@ -1,0 +1,804 @@
+{
+  "descricao": "Estrutura padronizada para classificação e análise de petições judiciais",
+  "modelo": {
+    "metadados": {
+      "titulo": "Título completo da petição",
+      "numero_peticao": "Número ou código interno da petição",
+      "tipo_peticao": "Inicial/Contestação/Recursal/Incidental/etc.",
+      "data_protocolo": "DD/MM/AAAA",
+      "meio_protocolo": "Físico/Eletrônico/PJe/e-SAJ/etc.",
+      "numero_paginas": "Quantidade de páginas",
+      "idioma": "Idioma da petição",
+      "grau_jurisdicao": "1º Grau/2º Grau/Superior",
+      "area_direito": "Área(s) do direito relacionada(s)",
+      "valor_causa": "Valor atribuído à causa",
+      "competencia": "Cível/Criminal/Trabalhista/Federal/etc.",
+      "natureza_acao": "Código e descrição conforme tabela processual unificada CNJ",
+      "sigilo": "Público/Segredo de justiça/Sigiloso"
+    },
+    "processo": {
+      "numero_processo": "Número unificado do processo (CNJ)",
+      "vara": "Identificação completa da vara/câmara/turma",
+      "tribunal": "Tribunal onde tramita o processo",
+      "comarca": "Comarca onde tramita o processo",
+      "juizo": "Juízo competente (se aplicável)",
+      "fase_processual": "Conhecimento/Execução/Recursal/etc.",
+      "classe": "Classe processual conforme tabela CNJ",
+      "assunto": "Assunto processual conforme tabela CNJ",
+      "processos_relacionados": [
+        {
+          "numero": "Número unificado do processo relacionado",
+          "tipo_relacao": "Dependência/Conexão/Continência/etc.",
+          "descricao": "Descrição da relação entre os processos"
+        }
+      ],
+      "incidentes": [
+        {
+          "tipo": "Tipo do incidente processual",
+          "numero": "Número do incidente",
+          "situacao": "Situação atual do incidente"
+        }
+      ]
+    },
+    "partes": {
+      "polo_ativo": [
+        {
+          "nome": "Nome completo da parte ativa",
+          "tipo": "Pessoa física/jurídica",
+          "qualificacao": "Qualificação da parte conforme petição",
+          "documentos": {
+            "tipo_pessoa_fisica": {
+              "cpf": "000.000.000-00",
+              "rg": "00.000.000-0"
+            },
+            "tipo_pessoa_juridica": {
+              "cnpj": "00.000.000/0001-00",
+              "inscricao_estadual": "000.000.000.000"
+            }
+          },
+          "endereco": {
+            "completo": "Endereço completo conforme consta na petição"
+          },
+          "papel": "Autor/Requerente/Agravante/Recorrente/etc."
+        }
+      ],
+      "polo_passivo": [
+        {
+          "nome": "Nome completo da parte passiva",
+          "tipo": "Pessoa física/jurídica",
+          "qualificacao": "Qualificação da parte conforme petição",
+          "documentos": {
+            "tipo_pessoa_fisica": {
+              "cpf": "000.000.000-00",
+              "rg": "00.000.000-0"
+            },
+            "tipo_pessoa_juridica": {
+              "cnpj": "00.000.000/0001-00",
+              "inscricao_estadual": "000.000.000.000"
+            }
+          },
+          "endereco": {
+            "completo": "Endereço completo conforme consta na petição"
+          },
+          "papel": "Réu/Requerido/Agravado/Recorrido/etc."
+        }
+      ],
+      "terceiros_interessados": [
+        {
+          "nome": "Nome completo do terceiro interessado",
+          "tipo": "Pessoa física/jurídica",
+          "qualificacao": "Qualificação da parte conforme petição",
+          "papel": "Assistente/Amicus Curiae/Opoente/etc."
+        }
+      ]
+    },
+    "representacao": {
+      "representantes_polo_ativo": [
+        {
+          "nome": "Nome completo do advogado/representante",
+          "tipo": "Advogado/Defensor Público/Procurador/etc.",
+          "registro_profissional": {
+            "tipo": "OAB/etc.",
+            "numero": "Número do registro profissional",
+            "seccional": "Seccional/Estado do registro"
+          },
+          "contato": {
+            "email": "email@dominio.com",
+            "telefone": "(00) 00000-0000",
+            "endereco_profissional": "Endereço profissional completo"
+          }
+        }
+      ],
+      "representantes_polo_passivo": [
+        {
+          "nome": "Nome completo do advogado/representante",
+          "tipo": "Advogado/Defensor Público/Procurador/etc.",
+          "registro_profissional": {
+            "tipo": "OAB/etc.",
+            "numero": "Número do registro profissional",
+            "seccional": "Seccional/Estado do registro"
+          },
+          "contato": {
+            "email": "email@dominio.com",
+            "telefone": "(00) 00000-0000",
+            "endereco_profissional": "Endereço profissional completo"
+          }
+        }
+      ]
+    },
+    "fatos": {
+      "resumo": "Resumo dos fatos narrados na petição",
+      "fatos_principais": [
+        "Fato principal 1 apresentado na petição",
+        "Fato principal 2 apresentado na petição"
+      ],
+      "cronologia": [
+        {
+          "data": "DD/MM/AAAA",
+          "descricao": "Descrição do evento relevante"
+        }
+      ],
+      "provas_mencionadas": [
+        {
+          "tipo": "Documento/Testemunha/Perícia/etc.",
+          "descricao": "Descrição da prova mencionada",
+          "localizacao": "Indicação de onde a prova se encontra (se aplicável)"
+        }
+      ]
+    },
+    "fundamentos": {
+      "resumo": "Resumo da fundamentação jurídica apresentada",
+      "fundamentos_juridicos": [
+        {
+          "tipo": "Constituição/Lei/Decreto/Portaria/Súmula/etc.",
+          "nome": "Nome ou número da norma",
+          "dispositivos": ["Art. X", "Art. Y, § Z"],
+          "trecho_citado": "Trecho relevante citado da norma",
+          "contexto_aplicacao": "Contexto de aplicação da norma ao caso"
+        }
+      ],
+      "jurisprudencia": [
+        {
+          "tipo": "Decisão judicial/Súmula/Enunciado",
+          "orgao": "Tribunal/Órgão emissor",
+          "numero": "Número do processo/súmula",
+          "relator": "Nome do relator (se aplicável)",
+          "data": "DD/MM/AAAA",
+          "trecho_citado": "Trecho relevante citado da decisão",
+          "contexto_aplicacao": "Contexto de aplicação do precedente ao caso"
+        }
+      ],
+      "doutrina": [
+        {
+          "autor": "Nome do autor",
+          "obra": "Título da obra",
+          "trecho_citado": "Trecho relevante citado da obra",
+          "contexto_aplicacao": "Contexto de aplicação da doutrina ao caso"
+        }
+      ],
+      "principios_invocados": [
+        "Princípio 1 invocado na petição",
+        "Princípio 2 invocado na petição"
+      ],
+      "teses_juridicas": [
+        "Tese jurídica 1 apresentada na petição",
+        "Tese jurídica 2 apresentada na petição"
+      ]
+    },
+    "pedidos": {
+      "tutela_provisoria": {
+        "tipo": "Urgência/Evidência",
+        "natureza": "Antecipada/Cautelar",
+        "fundamento_legal": "Dispositivo legal que fundamenta o pedido",
+        "resumo": "Resumo do pedido de tutela provisória",
+        "requisitos_alegados": [
+          "Requisito 1 alegado (probabilidade do direito, perigo de dano, etc.)",
+          "Requisito 2 alegado"
+        ],
+        "pedidos_especificos": [
+          "Pedido específico 1 da tutela provisória",
+          "Pedido específico 2 da tutela provisória"
+        ]
+      },
+      "merito": {
+        "resumo": "Resumo dos pedidos de mérito",
+        "pedidos_principais": [
+          "Pedido principal 1",
+          "Pedido principal 2"
+        ],
+        "pedidos_alternativos": [
+          "Pedido alternativo 1",
+          "Pedido alternativo 2"
+        ],
+        "pedidos_cumulativos": [
+          "Pedido cumulativo 1",
+          "Pedido cumulativo 2"
+        ]
+      },
+      "honorarios": {
+        "tipo": "Sucumbência/Contratuais",
+        "valor_ou_percentual": "Valor ou percentual solicitado",
+        "fundamento": "Fundamento legal do pedido de honorários"
+      },
+      "custas_processuais": {
+        "pedido": "Condenação/Isenção/etc.",
+        "fundamento": "Fundamento legal do pedido sobre custas processuais"
+      },
+      "gratuidade_justica": {
+        "solicitada": "Sim/Não",
+        "fundamento": "Fundamento da solicitação de gratuidade",
+        "documentos_comprobatorios": "Documentos anexados para comprovar necessidade"
+      },
+      "outros_requerimentos": [
+        "Outro requerimento 1",
+        "Outro requerimento 2"
+      ]
+    },
+    "provas": {
+      "provas_requeridas": [
+        {
+          "tipo": "Documental/Testemunhal/Pericial/etc.",
+          "objeto": "Objeto da prova requerida",
+          "finalidade": "Finalidade/fato a ser provado",
+          "justificativa": "Justificativa da necessidade da prova"
+        }
+      ],
+      "documentos_anexos": [
+        {
+          "descricao": "Descrição do documento anexado",
+          "tipo": "Contrato/Notificação/Recibo/etc.",
+          "data": "DD/MM/AAAA",
+          "relevancia": "Relevância do documento para o caso"
+        }
+      ],
+      "testemunhas_arroladas": [
+        {
+          "nome": "Nome da testemunha",
+          "qualificacao": "Qualificação da testemunha",
+          "fatos_conhecidos": "Fatos que a testemunha supostamente conhece",
+          "relacao_partes": "Relação da testemunha com as partes (se aplicável)"
+        }
+      ]
+    },
+    "questoes_processuais": {
+      "competencia": {
+        "fundamento": "Fundamento da competência alegada",
+        "tipo": "Territorial/Material/Funcional/Absoluta/Relativa"
+      },
+      "prevencao": {
+        "alegada": "Sim/Não",
+        "fundamento": "Fundamento da prevenção alegada",
+        "processo_referencia": "Número do processo que gera a prevenção"
+      },
+      "impedimentos_suspeicoes": [
+        {
+          "tipo": "Impedimento/Suspeição",
+          "autoridade": "Autoridade apontada como impedida/suspeita",
+          "fundamento": "Fundamento legal do impedimento/suspeição"
+        }
+      ],
+      "prescricao_decadencia": {
+        "alegacao": "Alegação relacionada à prescrição ou decadência",
+        "prazo": "Prazo legal aplicável",
+        "termo_inicial": "Data/evento considerado como termo inicial",
+        "termo_final": "Data/evento considerado como termo final",
+        "fundamento": "Fundamento legal da alegação"
+      },
+      "preliminares": [
+        {
+          "tipo": "Tipo de preliminar suscitada",
+          "descricao": "Descrição da preliminar",
+          "fundamento": "Fundamento legal da preliminar"
+        }
+      ],
+      "prejudiciais": [
+        {
+          "tipo": "Tipo de prejudicial suscitada",
+          "descricao": "Descrição da prejudicial",
+          "impacto": "Impacto processual alegado"
+        }
+      ]
+    },
+    "valor_economico": {
+      "valor_causa": "Valor atribuído à causa",
+      "justificativa": "Justificativa do valor atribuído",
+      "impugnacao": "Sim/Não (se aplicável)",
+      "valores_especificos": [
+        {
+          "descricao": "Descrição do item",
+          "valor": "Valor do item",
+          "calculo": "Explicação do cálculo utilizado"
+        }
+      ]
+    },
+    "aspectos_formais": {
+      "tempestividade": {
+        "prazo_legal": "Prazo legal aplicável",
+        "termo_inicial": "Data/evento considerado como termo inicial",
+        "termo_final": "Data/evento considerado como termo final",
+        "justificativa": "Justificativa da tempestividade (se aplicável)"
+      },
+      "preparo": {
+        "realizado": "Sim/Não",
+        "valor": "Valor do preparo",
+        "comprovante": "Informações sobre o comprovante anexado"
+      },
+      "capacidade_postulatoria": {
+        "regularidade": "Regular/Irregular",
+        "observacoes": "Observações sobre a capacidade postulatória"
+      },
+      "procuracao": {
+        "tipo": "Ad Judicia/Ad Judicia et Extra/Pública/etc.",
+        "data": "DD/MM/AAAA",
+        "poderes_especiais": "Poderes especiais outorgados (se aplicável)"
+      }
+    },
+    "conclusao": {
+      "sintese": "Síntese conclusiva da petição",
+      "reiteracao_pedidos": "Reiteração dos pedidos principais"
+    },
+    "informacoes_complementares": {
+      "dados_bancarios": {
+        "banco": "Nome do banco",
+        "agencia": "Número da agência",
+        "conta": "Número da conta",
+        "titular": "Nome do titular da conta",
+        "tipo_conta": "Corrente/Poupança",
+        "observacoes": "Observações sobre os dados bancários"
+      },
+      "enderecos_correspondencia": [
+        "Endereço para correspondência indicado na petição"
+      ],
+      "intimacoes_exclusivas": [
+        "Nome do advogado para intimações exclusivas"
+      ]
+    },
+    "assinatura": {
+      "tipo": "Física/Digital",
+      "signatario": "Nome completo do signatário",
+      "local_data": "Local e data da assinatura",
+      "certificado_digital": "Informações do certificado digital (se aplicável)"
+    },
+    "palavras_chave": ["palavra1", "palavra2", "palavra3"]
+  },
+  "exemplo": [
+    {
+      "metadados": {
+        "titulo": "Petição Inicial de Ação de Cobrança com Pedido de Tutela de Urgência",
+        "numero_peticao": "PI-2024-0123",
+        "tipo_peticao": "Inicial",
+        "data_protocolo": "15/04/2024",
+        "meio_protocolo": "PJe",
+        "numero_paginas": "25",
+        "idioma": "Português",
+        "grau_jurisdicao": "1º Grau",
+        "area_direito": "Direito Civil, Direito Contratual",
+        "valor_causa": "R$ 50.000,00",
+        "competencia": "Cível",
+        "natureza_acao": "1116 - Cobrança de Quantia Certa",
+        "sigilo": "Público"
+      },
+      "processo": {
+        "numero_processo": "Processo ainda não autuado",
+        "vara": "A ser definida por distribuição",
+        "tribunal": "Tribunal de Justiça do Estado de São Paulo",
+        "comarca": "São Paulo",
+        "juizo": "Foro Central Cível",
+        "fase_processual": "Conhecimento",
+        "classe": "1211 - Procedimento Comum Cível",
+        "assunto": "1116 - Cobrança de Quantia Certa",
+        "processos_relacionados": [],
+        "incidentes": []
+      },
+      "partes": {
+        "polo_ativo": [
+          {
+            "nome": "João da Silva",
+            "tipo": "Pessoa física",
+            "qualificacao": "Brasileiro, casado, empresário, inscrito no CPF sob o nº 123.456.789-00, portador do RG nº 12.345.678-9 SSP/SP",
+            "documentos": {
+              "tipo_pessoa_fisica": {
+                "cpf": "123.456.789-00",
+                "rg": "12.345.678-9"
+              }
+            },
+            "endereco": {
+              "completo": "Rua das Flores, nº 123, apto. 45, Jardim Primavera, São Paulo/SP, CEP 01234-567"
+            },
+            "papel": "Autor"
+          }
+        ],
+        "polo_passivo": [
+          {
+            "nome": "Empresa XYZ Ltda.",
+            "tipo": "Pessoa jurídica",
+            "qualificacao": "Pessoa jurídica de direito privado, inscrita no CNPJ sob o nº 98.765.432/0001-10",
+            "documentos": {
+              "tipo_pessoa_juridica": {
+                "cnpj": "98.765.432/0001-10",
+                "inscricao_estadual": "123.456.789.000"
+              }
+            },
+            "endereco": {
+              "completo": "Avenida Principal, nº 1000, Edifício Empresarial, 10º andar, conjunto 1001, Centro, São Paulo/SP, CEP 04567-890"
+            },
+            "papel": "Ré"
+          }
+        ],
+        "terceiros_interessados": []
+      },
+      "representacao": {
+        "representantes_polo_ativo": [
+          {
+            "nome": "Dr. Pedro Oliveira Santos",
+            "tipo": "Advogado",
+            "registro_profissional": {
+              "tipo": "OAB",
+              "numero": "123.456",
+              "seccional": "SP"
+            },
+            "contato": {
+              "email": "pedro.oliveira@advocacia.com.br",
+              "telefone": "(11) 98765-4321",
+              "endereco_profissional": "Rua dos Advogados, nº 500, conjunto 50, Centro, São Paulo/SP, CEP 01234-000"
+            }
+          }
+        ],
+        "representantes_polo_passivo": []
+      },
+      "fatos": {
+        "resumo": "O Autor prestou serviços de consultoria para a Ré entre janeiro e dezembro de 2023, conforme contrato firmado entre as partes. Após a conclusão dos serviços e emissão das respectivas notas fiscais, a Ré não efetuou o pagamento das cinco últimas parcelas, totalizando R$ 50.000,00.",
+        "fatos_principais": [
+          "Contrato de prestação de serviços de consultoria firmado em 05/01/2023 com vigência de 12 meses",
+          "Serviços executados integralmente conforme relatórios mensais aprovados pela Ré",
+          "Emissão regular de notas fiscais para todas as parcelas mensais",
+          "Inadimplemento das cinco últimas parcelas (agosto a dezembro/2023)",
+          "Tentativas de cobrança extrajudicial infrutíferas, conforme notificações anexas"
+        ],
+        "cronologia": [
+          {
+            "data": "05/01/2023",
+            "descricao": "Assinatura do contrato de prestação de serviços"
+          },
+          {
+            "data": "05/02/2023 a 05/07/2023",
+            "descricao": "Pagamento regular das sete primeiras parcelas"
+          },
+          {
+            "data": "05/08/2023",
+            "descricao": "Vencimento da 8ª parcela sem pagamento"
+          },
+          {
+            "data": "05/09/2023 a 05/12/2023",
+            "descricao": "Vencimento das parcelas 9ª a 12ª sem pagamento"
+          },
+          {
+            "data": "15/01/2024",
+            "descricao": "Envio de notificação extrajudicial"
+          },
+          {
+            "data": "20/02/2024",
+            "descricao": "Reunião com representantes da Ré sem acordo"
+          }
+        ],
+        "provas_mencionadas": [
+          {
+            "tipo": "Documento",
+            "descricao": "Contrato de prestação de serviços assinado pelas partes",
+            "localizacao": "Doc. 01"
+          },
+          {
+            "tipo": "Documento",
+            "descricao": "Notas fiscais emitidas pelo Autor (12 notas)",
+            "localizacao": "Doc. 02"
+          },
+          {
+            "tipo": "Documento",
+            "descricao": "Comprovantes de pagamento das sete primeiras parcelas",
+            "localizacao": "Doc. 03"
+          },
+          {
+            "tipo": "Documento",
+            "descricao": "Notificação extrajudicial e aviso de recebimento",
+            "localizacao": "Doc. 04"
+          },
+          {
+            "tipo": "Documento",
+            "descricao": "E-mails de cobrança enviados à Ré",
+            "localizacao": "Doc. 05"
+          },
+          {
+            "tipo": "Documento",
+            "descricao": "Relatórios mensais de serviços aprovados pela Ré",
+            "localizacao": "Doc. 06"
+          }
+        ]
+      },
+      "fundamentos": {
+        "resumo": "A pretensão fundamenta-se nas normas de direito civil sobre inadimplemento contratual e cobrança de dívidas, com destaque para os artigos do Código Civil que tratam do cumprimento das obrigações, mora do devedor e suas consequências jurídicas.",
+        "fundamentos_juridicos": [
+          {
+            "tipo": "Lei",
+            "nome": "Código Civil (Lei nº 10.406/2002)",
+            "dispositivos": ["Art. 389", "Art. 394", "Art. 395", "Art. 397", "Art. 406"],
+            "trecho_citado": "Art. 394. Considera-se em mora o devedor que não efetuar o pagamento e o credor que não quiser recebê-lo no tempo, lugar e forma que a lei ou a convenção estabelecer.",
+            "contexto_aplicacao": "A Ré está em mora desde o vencimento da primeira parcela não paga (05/08/2023), pois não efetuou o pagamento na data convencionada no contrato."
+          },
+          {
+            "tipo": "Lei",
+            "nome": "Código de Processo Civil (Lei nº 13.105/2015)",
+            "dispositivos": ["Art. 300", "Art. 301", "Art. 311, inciso IV"],
+            "trecho_citado": "Art. 300. A tutela de urgência será concedida quando houver elementos que evidenciem a probabilidade do direito e o perigo de dano ou o risco ao resultado útil do processo.",
+            "contexto_aplicacao": "Fundamentação do pedido de tutela de urgência para bloqueio de contas, com base na probabilidade do direito (documentação robusta) e perigo de dano (risco de insolvência)."
+          }
+        ],
+        "jurisprudencia": [
+          {
+            "tipo": "Decisão judicial",
+            "orgao": "Superior Tribunal de Justiça",
+            "numero": "REsp 1.335.348/RS",
+            "relator": "Ministro Ricardo Villas Bôas Cueva",
+            "data": "18/12/2018",
+            "trecho_citado": "O bloqueio de valores via sistema Bacenjud afigura-se perfeitamente possível quando verificada a presença dos requisitos para concessão da tutela de urgência, especialmente quanto à probabilidade do direito invocado.",
+            "contexto_aplicacao": "Precedente aplicável ao pedido de tutela de urgência para bloqueio de valores nas contas da Ré."
+          }
+        ],
+        "doutrina": [
+          {
+            "autor": "Flávio Tartuce",
+            "obra": "Manual de Direito Civil",
+            "trecho_citado": "O inadimplemento absoluto ocorre quando a obrigação não foi cumprida nem poderá sê-lo. Já a mora é o cumprimento imperfeito da obrigação, relativamente ao tempo, ao lugar ou à forma do pagamento.",
+            "contexto_aplicacao": "Fundamentação teórica sobre a mora e seus efeitos no caso concreto."
+          }
+        ],
+        "principios_invocados": [
+          "Princípio da boa-fé objetiva",
+          "Princípio da função social do contrato",
+          "Princípio da obrigatoriedade dos contratos (pacta sunt servanda)"
+        ],
+        "teses_juridicas": [
+          "Existência de relação contratual válida entre as partes, com obrigações claramente definidas",
+          "Cumprimento integral da prestação de serviços pelo Autor, conforme contratado",
+          "Inadimplemento injustificado da Ré quanto às cinco últimas parcelas contratadas",
+          "Configuração da mora desde o vencimento da primeira parcela não paga",
+          "Direito do Autor ao recebimento do valor integral inadimplido, acrescido de juros e correção monetária"
+        ]
+      },
+      "pedidos": {
+        "tutela_provisoria": {
+          "tipo": "Urgência",
+          "natureza": "Cautelar",
+          "fundamento_legal": "Art. 300 e 301 do CPC",
+          "resumo": "Bloqueio de valores nas contas bancárias da Ré até o limite de R$ 50.000,00 para garantir o resultado útil do processo",
+          "requisitos_alegados": [
+            "Probabilidade do direito evidenciada pela robusta documentação anexada (contrato, notas fiscais, aprovações dos serviços)",
+            "Perigo de dano demonstrado pelos indícios de dificuldades financeiras da Ré e risco de eventual insolvência"
+          ],
+          "pedidos_especificos": [
+            "Bloqueio de ativos financeiros via sistema Sisbajud até o limite de R$ 50.000,00",
+            "Determinação para que a Ré se abstenha de alienar bens imóveis até o julgamento final da ação"
+          ]
+        },
+        "merito": {
+          "resumo": "Condenação da Ré ao pagamento do valor de R$ 50.000,00, correspondente às cinco parcelas inadimplidas, acrescido de juros e correção monetária",
+          "pedidos_principais": [
+            "Condenação da Ré ao pagamento de R$ 50.000,00, referente às cinco parcelas inadimplidas do contrato de prestação de serviços",
+            "Condenação ao pagamento de juros de mora de 1% ao mês desde o vencimento de cada parcela",
+            "Condenação ao pagamento de correção monetária pelo IPCA-E desde o vencimento de cada parcela"
+          ],
+          "pedidos_alternativos": [],
+          "pedidos_cumulativos": [
+            "Condenação ao pagamento da multa contratual de 10% sobre o valor inadimplido"
+          ]
+        },
+        "honorarios": {
+          "tipo": "Sucumbência",
+          "valor_ou_percentual": "20% sobre o valor da condenação",
+          "fundamento": "Art. 85, § 2º do CPC"
+        },
+        "custas_processuais": {
+          "pedido": "Condenação da Ré ao ressarcimento",
+          "fundamento": "Art. 82, § 2º do CPC"
+        },
+        "gratuidade_justica": {
+          "solicitada": "Não",
+          "fundamento": "",
+          "documentos_comprobatorios": ""
+        },
+        "outros_requerimentos": [
+          "Citação da Ré para contestar a ação no prazo legal, sob pena de revelia",
+          "Produção de todas as provas admitidas em direito, especialmente documental e testemunhal",
+          "Intimação do Ministério Público (não necessária neste caso)"
+        ]
+      },
+      "provas": {
+        "provas_requeridas": [
+          {
+            "tipo": "Documental",
+            "objeto": "Documentos já anexados à petição inicial",
+            "finalidade": "Comprovar a relação contratual, prestação dos serviços e inadimplemento",
+            "justificativa": "Demonstração da veracidade dos fatos alegados"
+          },
+          {
+            "tipo": "Depoimento pessoal",
+            "objeto": "Representante legal da Ré",
+            "finalidade": "Esclarecer as razões do inadimplemento e confirmar a aprovação dos serviços",
+            "justificativa": "Obtenção de confissão quanto aos fatos controvertidos"
+          },
+          {
+            "tipo": "Testemunhal",
+            "objeto": "Oitiva das testemunhas arroladas",
+            "finalidade": "Comprovar a efetiva prestação dos serviços e a qualidade destes",
+            "justificativa": "Corroboração da prova documental já produzida"
+          },
+          {
+            "tipo": "Pericial contábil",
+            "objeto": "Verificação dos valores devidos, incluindo cálculo de juros e correção monetária",
+            "finalidade": "Apuração exata do valor atualizado do débito",
+            "justificativa": "Necessidade de precisão matemática no cálculo dos valores devidos"
+          }
+        ],
+        "documentos_anexos": [
+          {
+            "descricao": "Contrato de prestação de serviços",
+            "tipo": "Contrato",
+            "data": "05/01/2023",
+            "relevancia": "Prova da relação jurídica entre as partes e das obrigações pactuadas"
+          },
+          {
+            "descricao": "Notas fiscais emitidas",
+            "tipo": "Documento fiscal",
+            "data": "Janeiro a Dezembro/2023",
+            "relevancia": "Comprovação dos serviços prestados e valores cobrados"
+          },
+          {
+            "descricao": "Comprovantes de pagamento das sete primeiras parcelas",
+            "tipo": "Comprovante bancário",
+            "data": "Fevereiro a Julho/2023",
+            "relevancia": "Prova do cumprimento parcial da obrigação pela Ré e reconhecimento tácito da prestação dos serviços"
+          },
+          {
+            "descricao": "Notificação extrajudicial",
+            "tipo": "Notificação",
+            "data": "15/01/2024",
+            "relevancia": "Comprovação da tentativa de resolução extrajudicial e constituição formal em mora"
+          },
+          {
+            "descricao": "Relatórios mensais de serviços aprovados pela Ré",
+            "tipo": "Relatório técnico",
+            "data": "Janeiro a Dezembro/2023",
+            "relevancia": "Prova da efetiva prestação dos serviços e sua aprovação pela Ré"
+          },
+          {
+            "descricao": "E-mails de cobrança",
+            "tipo": "Correspondência eletrônica",
+            "data": "Agosto/2023 a Março/2024",
+            "relevancia": "Comprovação das tentativas de cobrança amigável e ciência da Ré sobre o inadimplemento"
+          }
+        ],
+        "testemunhas_arroladas": [
+          {
+            "nome": "Maria Oliveira Santos",
+            "qualificacao": "Brasileira, casada, administradora, RG 23.456.789-0, CPF 234.567.890-12",
+            "fatos_conhecidos": "Secretária executiva do Autor que participou de todas as reuniões com a Ré e organizou a documentação dos serviços",
+            "relacao_partes": "Funcionária do Autor"
+          },
+          {
+            "nome": "Carlos Eduardo Pereira",
+            "qualificacao": "Brasileiro, divorciado, engenheiro, RG 34.567.890-1, CPF 345.678.901-23",
+            "fatos_conhecidos": "Gerente do projeto na empresa Ré que aprovou os relatórios mensais de serviços",
+            "relacao_partes": "Ex-funcionário da Ré, desligado em Janeiro/2024"
+          },
+          {
+            "nome": "Luciana Mendes Costa",
+            "qualificacao": "Brasileira, solteira, contadora, RG 45.678.901-2, CPF 456.789.012-34",
+            "fatos_conhecidos": "Contadora independente que emitiu as notas fiscais e acompanhou o fluxo financeiro",
+            "relacao_partes": "Prestadora de serviços para o Autor, sem vínculo empregatício"
+          }
+        ]
+      },
+      "questoes_processuais": {
+        "competencia": {
+          "fundamento": "Art. 46 do CPC - domicílio do réu",
+          "tipo": "Territorial"
+        },
+        "prevencao": {
+          "alegada": "Não",
+          "fundamento": "",
+          "processo_referencia": ""
+        },
+        "impedimentos_suspeicoes": [],
+        "prescricao_decadencia": {
+          "alegacao": "Não há prescrição ou decadência a ser considerada",
+          "prazo": "Prazo prescricional de 5 anos para cobrança de dívidas líquidas constantes de instrumento particular (Art. 206, § 5º, I, do CC)",
+          "termo_inicial": "Data de vencimento de cada parcela inadimplida",
+          "termo_final": "Não aplicável",
+          "fundamento": "Art. 206, § 5º, I, do Código Civil"
+        },
+        "preliminares": [],
+        "prejudiciais": []
+      },
+      "valor_economico": {
+        "valor_causa": "R$ 50.000,00",
+        "justificativa": "Valor correspondente à soma das cinco parcelas inadimplidas, objeto da cobrança",
+        "impugnacao": "Não aplicável",
+        "valores_especificos": [
+          {
+            "descricao": "Parcela de Agosto/2023",
+            "valor": "R$ 10.000,00",
+            "calculo": "Valor fixo mensal conforme cláusula 3.1 do contrato"
+          },
+          {
+            "descricao": "Parcela de Setembro/2023",
+            "valor": "R$ 10.000,00",
+            "calculo": "Valor fixo mensal conforme cláusula 3.1 do contrato"
+          },
+          {
+            "descricao": "Parcela de Outubro/2023",
+            "valor": "R$ 10.000,00",
+            "calculo": "Valor fixo mensal conforme cláusula 3.1 do contrato"
+          },
+          {
+            "descricao": "Parcela de Novembro/2023",
+            "valor": "R$ 10.000,00",
+            "calculo": "Valor fixo mensal conforme cláusula 3.1 do contrato"
+          },
+          {
+            "descricao": "Parcela de Dezembro/2023",
+            "valor": "R$ 10.000,00",
+            "calculo": "Valor fixo mensal conforme cláusula 3.1 do contrato"
+          }
+        ]
+      },
+      "aspectos_formais": {
+        "tempestividade": {
+          "prazo_legal": "Não aplicável (petição inicial)",
+          "termo_inicial": "",
+          "termo_final": "",
+          "justificativa": ""
+        },
+        "preparo": {
+          "realizado": "Sim",
+          "valor": "R$ 1.500,00",
+          "comprovante": "Guia DARE recolhida em 15/04/2024"
+        },
+        "capacidade_postulatoria": {
+          "regularidade": "Regular",
+          "observacoes": "Advogado regularmente inscrito na OAB/SP com poderes específicos"
+        },
+        "procuracao": {
+          "tipo": "Ad Judicia et Extra",
+          "data": "01/03/2024",
+          "poderes_especiais": "Receber e dar quitação, transigir, firmar compromissos e renunciar a direitos"
+        }
+      },
+      "conclusao": {
+        "sintese": "Diante dos fatos e fundamentos expostos, resta evidente o direito do Autor ao recebimento dos valores inadimplidos, sendo necessária a intervenção judicial para a satisfação de seu crédito.",
+        "reiteracao_pedidos": "Reitera-se o pedido de tutela de urgência para bloqueio de valores e, no mérito, a procedência integral dos pedidos para condenação da Ré ao pagamento de R$ 50.000,00, acrescido de juros, correção monetária e multa contratual."
+      },
+      "informacoes_complementares": {
+        "dados_bancarios": {
+          "banco": "Banco Brasil",
+          "agencia": "1234",
+          "conta": "56789-0",
+          "titular": "João da Silva",
+          "tipo_conta": "Corrente",
+          "observacoes": "Para eventual depósito judicial ou cumprimento voluntário da obrigação"
+        },
+        "enderecos_correspondencia": [
+          "Rua dos Advogados, nº 500, conjunto 50, Centro, São Paulo/SP, CEP 01234-000"
+        ],
+        "intimacoes_exclusivas": [
+          "Dr. Pedro Oliveira Santos (OAB/SP 123.456)"
+        ]
+      },
+      "assinatura": {
+        "tipo": "Digital",
+        "signatario": "Pedro Oliveira Santos",
+        "local_data": "São Paulo, 15 de abril de 2024",
+        "certificado_digital": "ICP-Brasil, A3, emitido por AC-OAB"
+      },
+      "palavras_chave": ["cobrança", "contrato de prestação de serviços", "inadimplemento", "tutela de urgência", "bloqueio de valores", "consultoria"]
+    }
+  ]
+}

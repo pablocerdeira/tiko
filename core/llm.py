@@ -8,13 +8,26 @@ Supports chat-style endpoints returning choices[].message.content or completion-
 import requests
 
 class LLM:
+    def _read_template(self, template_filename):
+        import os
+        try:
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'schemas'))
+            template_path = os.path.join(base_dir, template_filename)
+            with open(template_path, 'r', encoding='utf-8') as f:
+                return f.read()
+        except Exception as e:
+            print(f'Error reading template {template_filename}: {e}')
+            return ''
+        
     def __init__(self, config):
         llm_cfg = config.get('llm', {})
         self.provider = llm_cfg.get('provider')
         providers = llm_cfg.get('providers', {})
         cfg = providers.get(self.provider, {})
         # API endpoint URL
-        self.url = cfg.get('url') or cfg.get('base_url')
+        self.url = cfg.get('url')
+        if not self.url:
+            self.url = cfg.get('base_url')
         # Credentials: prefer config, fallback to env.<PROVIDER>_API_KEY
         raw_key = cfg.get('api_key')
         if raw_key:
@@ -32,6 +45,7 @@ class LLM:
         self.context_window_fallback = cfg.get('context_window_fallback', None)
 
     def summarize(self, text):
+        # This method uses the system prompt defined in config.json for summary generation.
         if not self.url:
             print(f"LLM provider '{self.provider}' missing URL in configuration.")
             return None
@@ -54,7 +68,7 @@ class LLM:
             resp = requests.post(self.url, headers=headers, json=body)
             resp.raise_for_status()
             data = resp.json()
-            choices = data.get('choices', []) or []
+            choices = data.get('choices', [])
             if not choices:
                 return None
             first = choices[0]

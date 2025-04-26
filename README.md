@@ -201,4 +201,4 @@ Tiko is designed to run on systems with Python 3.8+ and is compatible with vario
 
 This project is open source. See LICENSE for more information.
  
- version: 0.2.0
+ version: 0.3.0

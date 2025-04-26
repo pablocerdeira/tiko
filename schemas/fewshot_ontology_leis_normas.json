@@ -1,0 +1,271 @@
+{
+  "descricao": "Estrutura padronizada para classificação e análise de atos normativos",
+  "modelo": {
+    "metadados": {
+      "tipo_ato": "Lei/Decreto/Medida Provisória/Resolução/Portaria/etc.",
+      "numero": "Número ou identificador do ato normativo",
+      "data": "DD/MM/AAAA",
+      "autoridade_emissora": "Órgão ou autoridade que expediu o ato",
+      "esfera": "Federal/Estadual/Municipal/Distrital",
+      "ementa": "Texto da ementa que resume o conteúdo do ato"
+    },
+    "estrutura_normativa": {
+      "preambulo": "Texto do preâmbulo",
+      "livros": [
+        {
+          "numero": "Número do livro",
+          "titulo": "Título do livro"
+        }
+      ],
+      "titulos": [
+        {
+          "numero": "Número do título",
+          "nome": "Nome do título"
+        }
+      ],
+      "capitulos": [
+        {
+          "numero": "Número do capítulo",
+          "nome": "Nome do capítulo"
+        }
+      ],
+      "secoes": [
+        {
+          "numero": "Número da seção",
+          "nome": "Nome da seção"
+        }
+      ],
+      "subsecoes": [
+        {
+          "numero": "Número da subseção",
+          "nome": "Nome da subseção"
+        }
+      ],
+      "artigos": [
+        {
+          "numero": "Número do artigo",
+          "caput": "Texto do caput do artigo",
+          "incisos": [
+            {
+              "numero": "Número do inciso",
+              "texto": "Texto do inciso"
+            }
+          ],
+          "alineas": [
+            {
+              "letra": "Letra da alínea",
+              "texto": "Texto da alínea"
+            }
+          ],
+          "itens": [
+            {
+              "numero": "Número do item",
+              "texto": "Texto do item"
+            }
+          ],
+          "paragrafos": [
+            {
+              "numero": "Número do parágrafo",
+              "texto": "Texto do parágrafo",
+              "incisos": [
+                {
+                  "numero": "Número do inciso do parágrafo",
+                  "texto": "Texto do inciso do parágrafo"
+                }
+              ],
+              "alineas": [
+                {
+                  "letra": "Letra da alínea do parágrafo",
+                  "texto": "Texto da alínea do parágrafo"
+                }
+              ],
+              "itens": [
+                {
+                  "numero": "Número do item da alínea do parágrafo",
+                  "texto": "Texto do item da alínea do parágrafo"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "disposicoes": {
+        "transitorias": [
+          {
+            "numero": "Número do artigo",
+            "texto": "Texto do artigo de disposição transitória"
+          }
+        ],
+        "finais": [
+          {
+            "numero": "Número do artigo",
+            "texto": "Texto do artigo de disposição final"
+          }
+        ]
+      },
+      "anexos": [
+        {
+          "numero": "Número ou identificador do anexo",
+          "titulo": "Título do anexo",
+          "conteudo": "Resumo do conteúdo do anexo"
+        }
+      ]
+    },
+    "referencias": {
+      "revogacoes": [
+        {
+          "ato": "Tipo e número do ato revogado",
+          "dispositivos": "Dispositivos revogados (ou 'integral' se todo o ato for revogado)"
+        }
+      ],
+      "alteracoes": [
+        {
+          "ato": "Tipo e número do ato alterado",
+          "dispositivos": "Dispositivos alterados"
+        }
+      ],
+      "regulamentacoes": [
+        {
+          "ato": "Tipo e número do ato que é regulamentado por este",
+          "dispositivos": "Dispositivos regulamentados"
+        }
+      ]
+    },
+    "vigencia": {
+      "data_inicio": "Data de início da vigência ou texto descrevendo quando entrará em vigor",
+      "vacatio_legis": "Período de vacatio legis, se aplicável"
+    },
+    "palavras_chave": ["palavra1", "palavra2", "palavra3"]
+  },
+  "exemplo": [
+    {
+      "metadados": {
+        "tipo_ato": "Lei Ordinária",
+        "numero": "14.133",
+        "data": "01/04/2021",
+        "autoridade_emissora": "Congresso Nacional",
+        "esfera": "Federal",
+        "ementa": "Estabelece normas gerais de licitação e contratação para as Administrações Públicas diretas, autárquicas e fundacionais da União, dos Estados, do Distrito Federal e dos Municípios"
+      },
+      "estrutura_normativa": {
+        "preambulo": "O PRESIDENTE DA REPÚBLICA Faço saber que o Congresso Nacional decreta e eu sanciono a seguinte Lei:",
+        "titulos": [
+          {
+            "numero": "I",
+            "nome": "DISPOSIÇÕES PRELIMINARES"
+          },
+          {
+            "numero": "II",
+            "nome": "LICITAÇÕES"
+          },
+          {
+            "numero": "III",
+            "nome": "CONTRATOS ADMINISTRATIVOS"
+          }
+        ],
+        "capitulos": [
+          {
+            "numero": "I",
+            "nome": "DO ÂMBITO DE APLICAÇÃO DESTA LEI"
+          },
+          {
+            "numero": "II",
+            "nome": "DOS PRINCÍPIOS"
+          }
+        ],
+        "artigos": [
+          {
+            "numero": "1",
+            "caput": "Esta Lei estabelece normas gerais de licitação e contratação para as Administrações Públicas diretas, autárquicas e fundacionais da União, dos Estados, do Distrito Federal e dos Municípios, e abrange:",
+            "incisos": [
+              {
+                "numero": "I",
+                "texto": "os órgãos dos Poderes Legislativo e Judiciário da União, dos Estados e do Distrito Federal e os órgãos do Poder Legislativo dos Municípios, quando no desempenho de função administrativa;"
+              },
+              {
+                "numero": "II",
+                "texto": "os fundos especiais e as demais entidades controladas direta ou indiretamente pela Administração Pública."
+              }
+            ],
+            "paragrafos": [
+              {
+                "numero": "1",
+                "texto": "Não são abrangidas por esta Lei as empresas públicas, as sociedades de economia mista e as suas subsidiárias, regidas pela Lei nº 13.303, de 30 de junho de 2016, ressalvado o disposto no art. 178 desta Lei."
+              },
+              {
+                "numero": "2",
+                "texto": "As contratações realizadas no âmbito das repartições públicas sediadas no exterior obedecerão às peculiaridades locais e aos princípios básicos estabelecidos nesta Lei, na forma de regulamentação específica a ser editada por ministro de Estado."
+              }
+            ]
+          },
+          {
+            "numero": "193",
+            "caput": "Revogam-se:",
+            "incisos": [
+              {
+                "numero": "I",
+                "texto": "os arts. 89 a 108 da Lei nº 8.666, de 21 de junho de 1993, na data de publicação desta Lei;"
+              },
+              {
+                "numero": "II",
+                "texto": "a Lei nº 8.666, de 21 de junho de 1993, a Lei nº 10.520, de 17 de julho de 2002, e os arts. 1º a 47-A da Lei nº 12.462, de 4 de agosto de 2011, após decorridos 2 (dois) anos da publicação oficial desta Lei."
+              }
+            ]
+          },
+          {
+            "numero": "194",
+            "caput": "Esta Lei entra em vigor na data de sua publicação e produzirá efeitos após 2 (dois) anos da publicação oficial."
+          }
+        ],
+        "disposicoes": {
+          "transitorias": [
+            {
+              "numero": "191",
+              "texto": "Até o decurso do prazo de que trata o inciso II do caput do art. 193, a Administração poderá optar por licitar ou contratar diretamente de acordo com esta Lei ou de acordo com as leis citadas no referido inciso, e a opção escolhida deverá ser indicada expressamente no edital ou no aviso ou instrumento de contratação direta, vedada a aplicação combinada desta Lei com as citadas no referido inciso."
+            }
+          ],
+          "finais": [
+            {
+              "numero": "193",
+              "texto": "Revogam-se: I - os arts. 89 a 108 da Lei nº 8.666, de 21 de junho de 1993, na data de publicação desta Lei; II - a Lei nº 8.666, de 21 de junho de 1993, a Lei nº 10.520, de 17 de julho de 2002, e os arts. 1º a 47-A da Lei nº 12.462, de 4 de agosto de 2011, após decorridos 2 (dois) anos da publicação oficial desta Lei."
+            },
+            {
+              "numero": "194",
+              "texto": "Esta Lei entra em vigor na data de sua publicação e produzirá efeitos após 2 (dois) anos da publicação oficial."
+            }
+          ]
+        },
+        "anexos": [
+          {
+            "numero": "Anexo I",
+            "titulo": "Quadro Comparativo dos Limites de Valor",
+            "conteudo": "Tabela com limites para dispensa de licitação, concorrência e outras modalidades conforme o tipo de contratação"
+          }
+        ]
+      },
+      "referencias": {
+        "revogacoes": [
+          {
+            "ato": "Lei nº 8.666/1993",
+            "dispositivos": "Arts. 89 a 108 imediatamente, e integral após 2 anos"
+          },
+          {
+            "ato": "Lei nº 10.520/2002",
+            "dispositivos": "Integral após 2 anos"
+          },
+          {
+            "ato": "Lei nº 12.462/2011",
+            "dispositivos": "Arts. 1º a 47-A após 2 anos"
+          }
+        ],
+        "alteracoes": [],
+        "regulamentacoes": []
+      },
+      "vigencia": {
+        "data_inicio": "01/04/2021 (publicação), com efeitos após 2 anos (01/04/2023)",
+        "vacatio_legis": "2 anos para produção de efeitos plenos, com exceção da revogação dos arts. 89 a 108 da Lei nº 8.666/1993"
+      },
+      "palavras_chave": ["licitação", "contratação pública", "administração pública", "contratos administrativos"]
+    }
+  ]
+}

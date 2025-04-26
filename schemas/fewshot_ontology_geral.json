@@ -1,0 +1,373 @@
+{
+  "descricao": "Estrutura padronizada para classificação e análise de documentos gerais",
+  "modelo": {
+    "metadados": {
+      "titulo": "Título completo do documento",
+      "identificador": "Código ou identificador único do documento",
+      "tipo_documento": "Tipo do documento (relatório, ofício, carta, memorando, etc.)",
+      "data_criacao": "DD/MM/AAAA",
+      "data_ultima_atualizacao": "DD/MM/AAAA",
+      "idioma": "Idioma principal do documento",
+      "autoria": {
+        "autor_principal": "Nome do autor principal ou instituição",
+        "autores_secundarios": ["Nome do autor secundário 1", "Nome do autor secundário 2"],
+        "departamento": "Departamento ou setor responsável",
+        "cargo": "Cargo ou função do autor principal"
+      },
+      "classificacao": {
+        "area_conhecimento": "Área de conhecimento principal",
+        "assunto_principal": "Assunto principal do documento",
+        "assuntos_secundarios": ["Assunto secundário 1", "Assunto secundário 2"],
+        "tags": ["tag1", "tag2", "tag3"]
+      },
+      "confidencialidade": "Público/Interno/Confidencial/Restrito/Sigiloso"
+    },
+    "destinatario": {
+      "nome": "Nome do destinatário (se aplicável)",
+      "organizacao": "Organização do destinatário",
+      "cargo": "Cargo ou função do destinatário",
+      "endereco": "Endereço completo do destinatário"
+    },
+    "estrutura_conteudo": {
+      "resumo": "Breve resumo do conteúdo do documento",
+      "palavras_chave": ["palavra1", "palavra2", "palavra3"],
+      "secoes": [
+        {
+          "titulo": "Título da seção",
+          "nivel": "Nível hierárquico da seção (1, 2, 3, etc.)",
+          "conteudo": "Resumo do conteúdo da seção",
+          "subsecoes": [
+            {
+              "titulo": "Título da subseção",
+              "nivel": "Nível hierárquico da subseção",
+              "conteudo": "Resumo do conteúdo da subseção"
+            }
+          ]
+        }
+      ],
+      "topicos_principais": [
+        "Tópico principal 1 abordado no documento",
+        "Tópico principal 2 abordado no documento"
+      ],
+      "conclusoes": [
+        "Conclusão 1 apresentada no documento",
+        "Conclusão 2 apresentada no documento"
+      ],
+      "recomendacoes": [
+        "Recomendação 1 apresentada no documento",
+        "Recomendação 2 apresentada no documento"
+      ]
+    },
+    "elementos_visuais": {
+      "tabelas": [
+        {
+          "numero": "Número/identificador da tabela",
+          "titulo": "Título da tabela",
+          "descricao": "Breve descrição do conteúdo da tabela"
+        }
+      ],
+      "figuras": [
+        {
+          "numero": "Número/identificador da figura",
+          "titulo": "Título da figura",
+          "descricao": "Breve descrição da figura",
+          "tipo": "Gráfico/Foto/Diagrama/Fluxograma/etc."
+        }
+      ],
+      "graficos": [
+        {
+          "numero": "Número/identificador do gráfico",
+          "titulo": "Título do gráfico",
+          "descricao": "Breve descrição dos dados representados no gráfico",
+          "tipo": "Barras/Pizza/Linha/Dispersão/etc."
+        }
+      ]
+    },
+    "referencias": {
+      "documentos_citados": [
+        {
+          "tipo": "Tipo do documento citado",
+          "titulo": "Título do documento citado",
+          "autor": "Autor do documento citado",
+          "data": "Data do documento citado",
+          "identificador": "Identificador do documento citado (se aplicável)"
+        }
+      ],
+      "bibliografia": [
+        "Referência bibliográfica 1",
+        "Referência bibliográfica 2"
+      ],
+      "links": [
+        {
+          "url": "URL do link",
+          "descricao": "Descrição do link",
+          "data_acesso": "Data de acesso ao link"
+        }
+      ]
+    },
+    "anexos": [
+      {
+        "titulo": "Título do anexo",
+        "descricao": "Descrição do conteúdo do anexo",
+        "tipo": "Tipo do anexo (documento, planilha, etc.)",
+        "identificador": "Identificador do anexo"
+      }
+    ],
+    "assinaturas": [
+      {
+        "nome": "Nome do signatário",
+        "cargo": "Cargo ou função do signatário",
+        "data": "Data da assinatura",
+        "tipo": "Física/Digital/Eletrônica"
+      }
+    ],
+    "historico_versoes": [
+      {
+        "versao": "Número/identificador da versão",
+        "data": "Data da versão",
+        "autor": "Responsável pela versão",
+        "alteracoes": "Descrição das principais alterações desta versão"
+      }
+    ]
+  },
+  "exemplo": [
+    {
+      "metadados": {
+        "titulo": "Relatório Anual de Sustentabilidade 2023",
+        "identificador": "REL-SUST-2023-001",
+        "tipo_documento": "Relatório Técnico",
+        "data_criacao": "15/01/2024",
+        "data_ultima_atualizacao": "20/02/2024",
+        "idioma": "Português",
+        "formato": "PDF",
+        "autoria": {
+          "autor_principal": "Departamento de Sustentabilidade",
+          "autores_secundarios": ["Maria Silva (Coordenadora)", "João Oliveira (Analista)", "Ana Santos (Especialista)"],
+          "departamento": "Diretoria de Responsabilidade Social",
+          "cargo": "Gerência de Sustentabilidade"
+        },
+        "classificacao": {
+          "area_conhecimento": "Sustentabilidade Corporativa",
+          "assunto_principal": "Indicadores de Sustentabilidade",
+          "assuntos_secundarios": ["Meio Ambiente", "Responsabilidade Social", "Governança Corporativa"],
+          "tags": ["ESG", "relatório anual", "sustentabilidade", "metas ambientais"]
+        },
+        "confidencialidade": "Público"
+      },
+      "destinatario": {
+        "nome": "Conselho Administrativo e Stakeholders",
+        "organizacao": "Empresa ABC S.A.",
+        "cargo": "Diretoria e Conselho",
+        "endereco": "Avenida Principal, 1000, São Paulo/SP"
+      },
+      "estrutura_conteudo": {
+        "resumo": "Este relatório apresenta os resultados das iniciativas de sustentabilidade da Empresa ABC S.A. durante o ano de 2023, destacando o desempenho ambiental, social e de governança. São avaliados os avanços em relação às metas estabelecidas e apresentados os novos compromissos para o período 2024-2030.",
+        "palavras_chave": ["sustentabilidade", "ESG", "meio ambiente", "responsabilidade social", "governança"],
+        "secoes": [
+          {
+            "titulo": "Mensagem do Presidente",
+            "nivel": "1",
+            "conteudo": "Apresentação do relatório pelo CEO da empresa, destacando os principais avanços e desafios do ano."
+          },
+          {
+            "titulo": "Visão Geral da Empresa",
+            "nivel": "1",
+            "conteudo": "Apresentação da empresa, estrutura organizacional e modelo de negócios.",
+            "subsecoes": [
+              {
+                "titulo": "Perfil Organizacional",
+                "nivel": "2",
+                "conteudo": "Descrição detalhada da empresa, incluindo porte, localizações e principais produtos/serviços."
+              },
+              {
+                "titulo": "Estratégia de Sustentabilidade",
+                "nivel": "2",
+                "conteudo": "Apresentação da estratégia de sustentabilidade da empresa e sua integração ao plano de negócios."
+              }
+            ]
+          },
+          {
+            "titulo": "Desempenho Ambiental",
+            "nivel": "1",
+            "conteudo": "Análise dos indicadores ambientais, incluindo consumo de recursos, emissões e gestão de resíduos.",
+            "subsecoes": [
+              {
+                "titulo": "Consumo de Energia",
+                "nivel": "2",
+                "conteudo": "Detalhamento do consumo energético e iniciativas de eficiência energética."
+              },
+              {
+                "titulo": "Gestão de Água",
+                "nivel": "2",
+                "conteudo": "Análise do consumo de água, tratamento de efluentes e iniciativas de reúso."
+              },
+              {
+                "titulo": "Emissões de GEE",
+                "nivel": "2",
+                "conteudo": "Inventário de emissões de gases de efeito estufa e ações de mitigação."
+              }
+            ]
+          },
+          {
+            "titulo": "Desempenho Social",
+            "nivel": "1",
+            "conteudo": "Apresentação das iniciativas sociais, engajamento com comunidades e gestão de pessoas.",
+            "subsecoes": [
+              {
+                "titulo": "Diversidade e Inclusão",
+                "nivel": "2",
+                "conteudo": "Políticas e indicadores de diversidade no quadro de colaboradores."
+              },
+              {
+                "titulo": "Saúde e Segurança",
+                "nivel": "2",
+                "conteudo": "Índices de acidentes, programas de saúde ocupacional e bem-estar."
+              }
+            ]
+          },
+          {
+            "titulo": "Governança Corporativa",
+            "nivel": "1",
+            "conteudo": "Estrutura de governança, ética e compliance, e gestão de riscos."
+          },
+          {
+            "titulo": "Metas e Compromissos",
+            "nivel": "1",
+            "conteudo": "Avaliação das metas estabelecidas para 2023 e definição de compromissos futuros."
+          }
+        ],
+        "topicos_principais": [
+          "Redução de 15% nas emissões de carbono em comparação ao ano anterior",
+          "Implementação de programa de diversidade e inclusão, aumentando em 30% a contratação de grupos sub-representados",
+          "Economia de 22% no consumo de água através de sistemas de reúso",
+          "Investimento de R$ 5 milhões em projetos sociais nas comunidades onde a empresa atua"
+        ],
+        "conclusoes": [
+          "A empresa superou 80% das metas ambientais estabelecidas para 2023",
+          "Os programas sociais beneficiaram mais de 10.000 pessoas em comunidades locais",
+          "A empresa foi incluída em três índices importantes de sustentabilidade",
+          "As iniciativas de economia circular geraram economia de R$ 3,2 milhões"
+        ],
+        "recomendacoes": [
+          "Expandir o programa de eficiência energética para todas as unidades operacionais",
+          "Implementar metas de sustentabilidade na remuneração variável dos executivos",
+          "Aumentar o escopo do inventário de emissões para incluir a cadeia de fornecedores (Escopo 3)",
+          "Desenvolver um programa de capacitação em sustentabilidade para todos os colaboradores"
+        ]
+      },
+      "elementos_visuais": {
+        "tabelas": [
+          {
+            "numero": "Tabela 1",
+            "titulo": "Indicadores Ambientais 2021-2023",
+            "descricao": "Dados comparativos dos principais indicadores ambientais dos últimos três anos"
+          },
+          {
+            "numero": "Tabela 2",
+            "titulo": "Distribuição de Colaboradores por Gênero e Nível Hierárquico",
+            "descricao": "Percentuais de colaboradores por gênero em cada nível da organização"
+          }
+        ],
+        "figuras": [
+          {
+            "numero": "Figura 1",
+            "titulo": "Estrutura de Governança para Sustentabilidade",
+            "descricao": "Organograma ilustrando a estrutura de governança para temas ESG",
+            "tipo": "Organograma"
+          }
+        ],
+        "graficos": [
+          {
+            "numero": "Gráfico 1",
+            "titulo": "Evolução das Emissões de GEE 2019-2023",
+            "descricao": "Gráfico mostrando a tendência de redução das emissões nos últimos cinco anos",
+            "tipo": "Linha"
+          },
+          {
+            "numero": "Gráfico 2",
+            "titulo": "Composição do Consumo Energético por Fonte",
+            "descricao": "Distribuição percentual das fontes de energia utilizadas pela empresa",
+            "tipo": "Pizza"
+          }
+        ]
+      },
+      "referencias": {
+        "documentos_citados": [
+          {
+            "tipo": "Relatório",
+            "titulo": "Global Reporting Initiative Standards 2021",
+            "autor": "Global Reporting Initiative",
+            "data": "2021",
+            "identificador": "GRI Standards"
+          },
+          {
+            "tipo": "Norma",
+            "titulo": "ISO 14001:2015 - Sistema de Gestão Ambiental",
+            "autor": "International Organization for Standardization",
+            "data": "2015",
+            "identificador": "ISO 14001:2015"
+          }
+        ],
+        "bibliografia": [
+          "IPCC, 2022. Climate Change 2022: Impacts, Adaptation and Vulnerability.",
+          "World Business Council for Sustainable Development, 2023. Vision 2050: Time to Transform."
+        ],
+        "links": [
+          {
+            "url": "https://www.empresaabc.com/sustentabilidade",
+            "descricao": "Portal de Sustentabilidade da Empresa ABC",
+            "data_acesso": "10/01/2024"
+          }
+        ]
+      },
+      "anexos": [
+        {
+          "titulo": "Anexo I - Metodologia de Cálculo dos Indicadores",
+          "descricao": "Detalhamento da metodologia utilizada para mensuração dos indicadores apresentados",
+          "tipo": "Documento Técnico",
+          "identificador": "ANX-MET-IND-2023"
+        },
+        {
+          "titulo": "Anexo II - Declaração de Verificação Externa",
+          "descricao": "Relatório de auditoria independente sobre as informações de sustentabilidade",
+          "tipo": "Relatório de Auditoria",
+          "identificador": "ANX-VER-EXT-2023"
+        }
+      ],
+      "assinaturas": [
+        {
+          "nome": "Carlos Mendes",
+          "cargo": "Diretor de Responsabilidade Social",
+          "data": "20/02/2024",
+          "tipo": "Digital"
+        },
+        {
+          "nome": "Fernanda Rodrigues",
+          "cargo": "Presidente",
+          "data": "20/02/2024",
+          "tipo": "Digital"
+        }
+      ],
+      "historico_versoes": [
+        {
+          "versao": "1.0",
+          "data": "15/01/2024",
+          "autor": "Equipe de Sustentabilidade",
+          "alteracoes": "Versão inicial do documento"
+        },
+        {
+          "versao": "1.1",
+          "data": "05/02/2024",
+          "autor": "Maria Silva",
+          "alteracoes": "Atualização dos dados de emissões após verificação externa"
+        },
+        {
+          "versao": "2.0",
+          "data": "20/02/2024",
+          "autor": "Carlos Mendes",
+          "alteracoes": "Versão final com aprovação da diretoria e inclusão dos anexos"
+        }
+      ]
+    }
+  ]
+}

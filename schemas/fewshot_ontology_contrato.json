@@ -1,0 +1,620 @@
+{
+  "descricao": "Estrutura padronizada para classificação e análise de contratos",
+  "modelo": {
+    "metadados": {
+      "titulo": "Nome completo do contrato",
+      "tipo": "Tipo específico do contrato",
+      "identificador": "Número ou código de identificação do contrato",
+      "data_assinatura": "DD/MM/AAAA",
+      "data_inicio": "DD/MM/AAAA",
+      "data_termino": "DD/MM/AAAA",
+      "local_assinatura": "Cidade/Estado",
+      "legislacao_aplicavel": "Lei aplicável ao contrato"
+    },
+    "partes": {
+      "parte1": {
+        "nome": "Nome completo da parte",
+        "tipo": "Pessoa física/jurídica",
+        "documentos": {
+          "tipo_pessoa_fisica": {
+            "cpf": "000.000.000-00",
+            "rg": "00.000.000-0",
+            "orgao_emissor": "SSP/UF",
+            "data_emissao": "DD/MM/AAAA"
+          },
+          "tipo_pessoa_juridica": {
+            "cnpj": "00.000.000/0001-00",
+            "inscricao_estadual": "000.000.000.000",
+            "inscricao_municipal": "0.000.000-0"
+          }
+        },
+        "endereco": {
+          "logradouro": "Nome da rua/avenida",
+          "numero": "Número",
+          "complemento": "Complemento",
+          "bairro": "Bairro",
+          "cidade": "Cidade",
+          "estado": "UF",
+          "cep": "00000-000",
+          "pais": "País"
+        },
+        "contato": {
+          "telefone": "(00) 0000-0000",
+          "celular": "(00) 00000-0000",
+          "email": "email@dominio.com"
+        },
+        "representante": {
+          "nome": "Nome do representante legal",
+          "cargo": "Cargo do representante",
+          "cpf": "000.000.000-00",
+          "poderes": "Descrição dos poderes de representação"
+        },
+        "papel": "Contratante/Contratado/etc."
+      },
+      "parte2": {
+        "nome": "Nome completo da parte",
+        "tipo": "Pessoa física/jurídica",
+        "documentos": {
+          "tipo_pessoa_fisica": {
+            "cpf": "000.000.000-00",
+            "rg": "00.000.000-0",
+            "orgao_emissor": "SSP/UF",
+            "data_emissao": "DD/MM/AAAA"
+          },
+          "tipo_pessoa_juridica": {
+            "cnpj": "00.000.000/0001-00",
+            "inscricao_estadual": "000.000.000.000",
+            "inscricao_municipal": "0.000.000-0"
+          }
+        },
+        "endereco": {
+          "logradouro": "Nome da rua/avenida",
+          "numero": "Número",
+          "complemento": "Complemento",
+          "bairro": "Bairro",
+          "cidade": "Cidade",
+          "estado": "UF",
+          "cep": "00000-000",
+          "pais": "País"
+        },
+        "contato": {
+          "telefone": "(00) 0000-0000",
+          "celular": "(00) 00000-0000",
+          "email": "email@dominio.com"
+        },
+        "representante": {
+          "nome": "Nome do representante legal",
+          "cargo": "Cargo do representante",
+          "cpf": "000.000.000-00",
+          "poderes": "Descrição dos poderes de representação"
+        },
+        "papel": "Contratante/Contratado/etc."
+      },
+      "intervenientes": [
+        {
+          "nome": "Nome do interveniente",
+          "tipo": "Pessoa física/jurídica",
+          "documentos": {
+            "tipo_pessoa_fisica": {
+              "cpf": "000.000.000-00",
+              "rg": "00.000.000-0",
+              "orgao_emissor": "SSP/UF",
+              "data_emissao": "DD/MM/AAAA"
+            },
+            "tipo_pessoa_juridica": {
+              "cnpj": "00.000.000/0001-00",
+              "inscricao_estadual": "000.000.000.000",
+              "inscricao_municipal": "0.000.000-0"
+            }
+          },
+          "endereco": {
+            "logradouro": "Nome da rua/avenida",
+            "numero": "Número",
+            "complemento": "Complemento",
+            "bairro": "Bairro",
+            "cidade": "Cidade",
+            "estado": "UF",
+            "cep": "00000-000",
+            "pais": "País"
+          },
+          "contato": {
+            "telefone": "(00) 0000-0000",
+            "celular": "(00) 00000-0000",
+            "email": "email@dominio.com"
+          },
+          "representante": {
+            "nome": "Nome do representante legal",
+            "cargo": "Cargo do representante",
+            "cpf": "000.000.000-00",
+            "poderes": "Descrição dos poderes de representação"
+          },
+          "papel": "Fiador/Garantidor/Testemunha/etc."
+        }
+      ]
+    },
+    "objeto": {
+      "descricao": "Descrição detalhada do objeto do contrato",
+      "categorias": ["Categoria 1", "Categoria 2"]
+    },
+    "valores": {
+      "moeda": "Moeda utilizada",
+      "valor_global": "Valor total do contrato (se aplicável)",
+      "valores_pro_labore": [
+        {
+          "descricao": "Descrição do pró-labore",
+          "valor": "Valor do pró-labore",
+          "periodicidade": "Mensal/Anual/etc.",
+          "data_pagamento": "Data ou dia do mês para pagamento",
+          "condicoes": "Condições específicas para este pagamento"
+        }
+      ],
+      "valores_engajamento": [
+        {
+          "descricao": "Descrição do pagamento de engajamento",
+          "valor": "Valor do engajamento",
+          "data_pagamento": "Data do pagamento",
+          "gatilho": "Evento que dispara o pagamento",
+          "condicoes": "Condições específicas para este pagamento"
+        }
+      ],
+      "valores_mensais": [
+        {
+          "descricao": "Descrição do pagamento mensal",
+          "valor": "Valor mensal",
+          "dia_pagamento": "Dia do mês para pagamento",
+          "inicio": "Data de início deste pagamento mensal",
+          "termino": "Data de término deste pagamento mensal",
+          "condicoes": "Condições específicas para este pagamento"
+        }
+      ],
+      "valores_exito": [
+        {
+          "descricao": "Descrição do pagamento por êxito",
+          "valor": "Valor ou percentual do êxito",
+          "base_calculo": "Base de cálculo para percentuais",
+          "gatilho": "Evento/meta que caracteriza o êxito",
+          "prazo_pagamento": "Prazo para pagamento após o êxito",
+          "condicoes": "Condições específicas para este pagamento"
+        }
+      ],
+      "dados_bancarios": {
+        "banco": "Nome do banco",
+        "agencia": "Número da agência",
+        "conta": "Número da conta",
+        "tipo_conta": "Corrente/Poupança",
+        "titular": "Nome do titular da conta",
+        "pix": "Chave PIX para pagamentos"
+      },
+      "reajuste": {
+        "indice": "Índice utilizado para reajuste",
+        "periodicidade": "Periodicidade do reajuste",
+        "data_base": "Data base para cálculo do reajuste",
+        "metodo_calculo": "Detalhamento do método de cálculo do reajuste"
+      },
+      "impostos": {
+        "retencoes": [
+          {
+            "tipo": "Tipo de imposto/contribuição",
+            "percentual": "Percentual a ser retido",
+            "responsavel": "Parte responsável pela retenção"
+          }
+        ],
+        "observacoes": "Observações sobre tratamento fiscal aplicável"
+      }
+    },
+    "prazos": {
+      "vigencia": "Prazo de vigência do contrato",
+      "entrega": "Prazo para entrega/execução",
+      "pagamento": "Prazo para pagamento",
+      "aceite": "Prazo para aceite/homologação"
+    },
+    "obrigacoes": {
+      "parte1": [
+        "Obrigação 1 da parte 1",
+        "Obrigação 2 da parte 1"
+      ],
+      "parte2": [
+        "Obrigação 1 da parte 2",
+        "Obrigação 2 da parte 2"
+      ]
+    },
+    "clausulas_especiais": [
+      {
+        "titulo": "Título da cláusula",
+        "conteudo": "Conteúdo da cláusula especial",
+        "tipo": "Confidencialidade/Não-concorrência/Exclusividade/etc."
+      }
+    ],
+    "garantias": [
+      {
+        "tipo": "Tipo de garantia",
+        "valor": "Valor da garantia",
+        "descricao": "Descrição detalhada da garantia",
+        "prazo_validade": "Prazo de validade da garantia",
+        "condicoes_execucao": "Condições para execução da garantia"
+      }
+    ],
+    "rescisao": {
+      "motivos": ["Motivo 1", "Motivo 2"],
+      "penalidades": ["Penalidade 1", "Penalidade 2"],
+      "procedimentos": "Procedimentos para rescisão",
+      "prazos_notificacao": "Prazos para notificação em caso de rescisão"
+    },
+    "solucao_controversias": {
+      "metodo": "Mediação/Arbitragem/Judicial",
+      "foro": "Comarca competente ou câmara arbitral",
+      "regras": "Regras aplicáveis à solução de controvérsias"
+    },
+    "assinaturas": {
+      "fisicas": ["Nome do signatário 1", "Nome do signatário 2"],
+      "digitais": [
+        {
+          "nome": "Nome do signatário digital",
+          "plataforma": "Plataforma utilizada",
+          "certificado": "Informações do certificado digital",
+          "data_hora": "Data e hora da assinatura digital",
+          "ip": "Endereço IP do assinante"
+        }
+      ],
+      "testemunhas": [
+        {
+          "nome": "Nome da testemunha",
+          "cpf": "000.000.000-00",
+          "endereco": "Endereço da testemunha"
+        }
+      ]
+    },
+    "anexos": [
+      {
+        "titulo": "Título do anexo",
+        "descricao": "Breve descrição do conteúdo do anexo",
+        "identificador": "Código ou número do anexo"
+      }
+    ],
+    "palavras_chave": ["palavra1", "palavra2", "palavra3"]
+  },
+  "exemplo": [
+    {
+      "metadados": {
+        "titulo": "Contrato de Prestação de Serviços de Consultoria Jurídica",
+        "tipo": "Prestação de Serviços",
+        "identificador": "CONT-2024-0157",
+        "data_assinatura": "28/02/2024",
+        "data_inicio": "01/03/2024",
+        "data_termino": "01/03/2025",
+        "local_assinatura": "São Paulo/SP",
+        "legislacao_aplicavel": "Lei brasileira, especialmente Lei 10.406/2002 (Código Civil)"
+      },
+      "partes": {
+        "parte1": {
+          "nome": "Empresa ABC Ltda.",
+          "tipo": "Pessoa jurídica",
+          "documentos": {
+            "tipo_pessoa_juridica": {
+              "cnpj": "12.345.678/0001-90",
+              "inscricao_estadual": "123.456.789.000",
+              "inscricao_municipal": "1.234.567-8"
+            }
+          },
+          "endereco": {
+            "logradouro": "Rua Principal",
+            "numero": "123",
+            "complemento": "Andar 15",
+            "bairro": "Centro",
+            "cidade": "São Paulo",
+            "estado": "SP",
+            "cep": "01234-567",
+            "pais": "Brasil"
+          },
+          "contato": {
+            "telefone": "(11) 3456-7890",
+            "celular": "(11) 98765-4321",
+            "email": "contato@empresaabc.com.br"
+          },
+          "representante": {
+            "nome": "José Silva",
+            "cargo": "Diretor Comercial",
+            "cpf": "123.456.789-00",
+            "poderes": "Conforme Contrato Social registrado na JUCESP sob nº 987.654.321 em 10/01/2020"
+          },
+          "papel": "Contratante"
+        },
+        "parte2": {
+          "nome": "Escritório XYZ Advogados Associados",
+          "tipo": "Pessoa jurídica",
+          "documentos": {
+            "tipo_pessoa_juridica": {
+              "cnpj": "98.765.432/0001-10",
+              "inscricao_estadual": "Isento",
+              "inscricao_municipal": "9.876.543-2"
+            }
+          },
+          "endereco": {
+            "logradouro": "Avenida Secundária",
+            "numero": "456",
+            "complemento": "Conjuntos 1001 a 1010",
+            "bairro": "Jardins",
+            "cidade": "São Paulo",
+            "estado": "SP",
+            "cep": "04567-890",
+            "pais": "Brasil"
+          },
+          "contato": {
+            "telefone": "(11) 2345-6789",
+            "celular": "(11) 97654-3210",
+            "email": "contato@escritorioxyz.adv.br"
+          },
+          "representante": {
+            "nome": "Ana Paula Rodrigues",
+            "cargo": "Sócia-administradora",
+            "cpf": "234.567.890-12",
+            "poderes": "Conforme Contrato Social registrado na OAB/SP sob nº 12345 em 15/06/2018"
+          },
+          "papel": "Contratado"
+        },
+        "intervenientes": [
+          {
+            "nome": "Garantidora DEF S/A",
+            "tipo": "Pessoa jurídica",
+            "documentos": {
+              "tipo_pessoa_juridica": {
+                "cnpj": "76.543.210/0001-98",
+                "inscricao_estadual": "765.432.109.000",
+                "inscricao_municipal": "7.654.321-0"
+              }
+            },
+            "endereco": {
+              "logradouro": "Alameda Terciária",
+              "numero": "789",
+              "complemento": "Torre B, Andar 20",
+              "bairro": "Vila Empresarial",
+              "cidade": "São Paulo",
+              "estado": "SP",
+              "cep": "06789-012",
+              "pais": "Brasil"
+            },
+            "contato": {
+              "telefone": "(11) 3210-9876",
+              "celular": "",
+              "email": "contato@garantidora.com.br"
+            },
+            "representante": {
+              "nome": "Roberto Mendes",
+              "cargo": "Diretor Financeiro",
+              "cpf": "345.678.901-23",
+              "poderes": "Conforme Estatuto Social registrado na JUCESP sob nº 543.210.987 em 05/03/2022"
+            },
+            "papel": "Garantidor"
+          }
+        ]
+      },
+      "objeto": {
+        "descricao": "Prestação de serviços de consultoria jurídica especializada em direito empresarial, incluindo análise de contratos comerciais, emissão de pareceres e representação em negociações.",
+        "categorias": ["Consultoria jurídica", "Direito empresarial", "Análise contratual"]
+      },
+      "valores": {
+        "moeda": "Real (BRL)",
+        "valor_global": "R$ 180.000,00",
+        "valores_pro_labore": [
+          {
+            "descricao": "Pró-labore mensal para gerenciamento do contrato",
+            "valor": "R$ 5.000,00",
+            "periodicidade": "Mensal",
+            "data_pagamento": "Todo dia 5 de cada mês",
+            "condicoes": "Pagamento fixo independente do volume de consultas ou demandas"
+          }
+        ],
+        "valores_engajamento": [
+          {
+            "descricao": "Taxa de início do projeto para organização do fluxo de trabalho",
+            "valor": "R$ 15.000,00",
+            "data_pagamento": "10/03/2024",
+            "gatilho": "Assinatura do contrato",
+            "condicoes": "Pagamento único no início do contrato para estruturação da equipe"
+          },
+          {
+            "descricao": "Taxa de engajamento para revisão anual da estrutura contratual",
+            "valor": "R$ 10.000,00",
+            "data_pagamento": "01/03/2025",
+            "gatilho": "Conclusão do primeiro ano de contrato",
+            "condicoes": "Condicionado à renovação contratual por mais 12 meses"
+          }
+        ],
+        "valores_mensais": [
+          {
+            "descricao": "Valor mensal para consultas ilimitadas por email e telefone",
+            "valor": "R$ 8.000,00",
+            "dia_pagamento": "15",
+            "inicio": "15/03/2024",
+            "termino": "15/02/2025",
+            "condicoes": "Pagamento independente do volume de consultas realizadas no período"
+          },
+          {
+            "descricao": "Valor mensal para revisão de até 5 contratos por mês",
+            "valor": "R$ 7.000,00",
+            "dia_pagamento": "20",
+            "inicio": "20/03/2024",
+            "termino": "20/02/2025",
+            "condicoes": "Contratos adicionais serão cobrados à parte conforme tabela do Anexo I"
+          }
+        ],
+        "valores_exito": [
+          {
+            "descricao": "Honorários de êxito em negociações comerciais",
+            "valor": "5%",
+            "base_calculo": "Valor economizado em relação à proposta inicial",
+            "gatilho": "Conclusão da negociação com valor inferior ao inicialmente proposto pela contraparte",
+            "prazo_pagamento": "15 dias após a finalização da negociação",
+            "condicoes": "Aplicável apenas para negociações acima de R$ 100.000,00"
+          },
+          {
+            "descricao": "Bônus por redução de contingências jurídicas",
+            "valor": "10%",
+            "base_calculo": "Valor da contingência evitada ou reduzida",
+            "gatilho": "Comprovação da redução de risco jurídico através de parecer específico",
+            "prazo_pagamento": "30 dias após a aprovação do parecer pela diretoria",
+            "condicoes": "Limitado a R$ 50.000,00 por evento e R$ 100.000,00 por ano"
+          }
+        ],
+        "dados_bancarios": {
+          "banco": "Banco Exemplo",
+          "agencia": "1234",
+          "conta": "56789-0",
+          "tipo_conta": "Corrente",
+          "titular": "Escritório XYZ Advogados Associados",
+          "pix": "98.765.432/0001-10"
+        },
+        "reajuste": {
+          "indice": "IPCA",
+          "periodicidade": "Anual",
+          "data_base": "Data de assinatura do contrato",
+          "metodo_calculo": "Aplicação do índice acumulado nos 12 meses anteriores ao mês de aniversário do contrato"
+        },
+        "impostos": {
+          "retencoes": [
+            {
+              "tipo": "IR",
+              "percentual": "1,5%",
+              "responsavel": "Contratante"
+            },
+            {
+              "tipo": "PIS/COFINS/CSLL",
+              "percentual": "4,65%",
+              "responsavel": "Contratante"
+            },
+            {
+              "tipo": "ISS",
+              "percentual": "5%",
+              "responsavel": "Contratante"
+            }
+          ],
+          "observacoes": "O Contratado fornecerá mensalmente documentação comprobatória de sua regularidade fiscal"
+        }
+      },
+      "prazos": {
+        "vigencia": "12 meses",
+        "entrega": "Pareceres em até 5 dias úteis, relatórios até o dia 10 de cada mês",
+        "pagamento": "Conforme especificado em cada tipo de valor",
+        "aceite": "5 dias úteis após a entrega dos relatórios para validação pelo Contratante"
+      },
+      "obrigacoes": {
+        "parte1": [
+          "Fornecer todas as informações necessárias para a execução dos serviços",
+          "Efetuar os pagamentos conforme cronograma estabelecido",
+          "Avaliar e dar feedback sobre os pareceres e relatórios entregues",
+          "Designar interlocutor autorizado para aprovações e demandas"
+        ],
+        "parte2": [
+          "Prestar os serviços de consultoria jurídica com qualidade e diligência",
+          "Entregar relatórios mensais detalhando as atividades realizadas",
+          "Manter sigilo sobre as informações confidenciais da Contratante",
+          "Disponibilizar equipe qualificada para atendimento das demandas",
+          "Estar disponível para reuniões semanais de acompanhamento",
+          "Emitir nota fiscal referente aos serviços prestados"
+        ]
+      },
+      "clausulas_especiais": [
+        {
+          "titulo": "Confidencialidade",
+          "conteudo": "O Contratado se compromete a manter sigilo absoluto sobre todas as informações da Contratante, por prazo indeterminado, mesmo após o término do contrato.",
+          "tipo": "Confidencialidade"
+        },
+        {
+          "titulo": "Não-concorrência",
+          "conteudo": "O Contratado não poderá prestar serviços para concorrentes diretos da Contratante durante a vigência deste contrato e por 6 meses após seu término.",
+          "tipo": "Não-concorrência"
+        },
+        {
+          "titulo": "Propriedade intelectual",
+          "conteudo": "Todo material desenvolvido pelo Contratado durante a vigência deste contrato será de propriedade exclusiva da Contratante.",
+          "tipo": "Propriedade intelectual"
+        }
+      ],
+      "garantias": [
+        {
+          "tipo": "Fiança",
+          "valor": "R$ 50.000,00",
+          "descricao": "Garantia prestada pela Garantidora DEF S/A",
+          "prazo_validade": "Vigência do contrato acrescida de 3 meses",
+          "condicoes_execucao": "Em caso de inadimplemento comprovado do Contratado após notificação formal com prazo de 15 dias para regularização"
+        }
+      ],
+      "rescisao": {
+        "motivos": [
+          "Descumprimento de qualquer cláusula contratual",
+          "Atraso superior a 30 dias no pagamento",
+          "Falência ou recuperação judicial de qualquer das partes",
+          "Comprovação de ineficiência técnica na prestação dos serviços"
+        ],
+        "penalidades": [
+          "Multa de 10% sobre o valor remanescente do contrato em caso de rescisão sem justa causa",
+          "Indenização por perdas e danos em caso de violação da cláusula de confidencialidade",
+          "Pagamento imediato de todo valor pendente até a data da rescisão"
+        ],
+        "procedimentos": "Notificação prévia por escrito, com comprovação de recebimento",
+        "prazos_notificacao": "30 dias de antecedência, indicando o motivo da rescisão"
+      },
+      "solucao_controversias": {
+        "metodo": "Arbitragem",
+        "foro": "Câmara de Arbitragem Empresarial - Brasil (CAMARB)",
+        "regras": "Regulamento da CAMARB e legislação brasileira aplicável"
+      },
+      "assinaturas": {
+        "fisicas": [],
+        "digitais": [
+          {
+            "nome": "José Silva (Contratante)",
+            "plataforma": "DocuSign",
+            "certificado": "Certificado ICP-Brasil, A3",
+            "data_hora": "28/02/2024 14:35:22",
+            "ip": "187.45.123.456"
+          },
+          {
+            "nome": "Ana Paula Rodrigues (Contratado)",
+            "plataforma": "DocuSign",
+            "certificado": "Certificado ICP-Brasil, A3",
+            "data_hora": "28/02/2024 16:22:15",
+            "ip": "189.54.789.123"
+          },
+          {
+            "nome": "Roberto Mendes (Garantidor)",
+            "plataforma": "DocuSign",
+            "certificado": "Certificado ICP-Brasil, A3",
+            "data_hora": "28/02/2024 18:05:47",
+            "ip": "201.45.678.901"
+          }
+        ],
+        "testemunhas": [
+          {
+            "nome": "Márcia Ferreira",
+            "cpf": "567.890.123-45",
+            "endereco": "Rua das Flores, 123, São Paulo/SP"
+          },
+          {
+            "nome": "Pedro Souza",
+            "cpf": "678.901.234-56",
+            "endereco": "Rua dos Pinheiros, 456, São Paulo/SP"
+          }
+        ]
+      },
+      "anexos": [
+        {
+          "titulo": "Anexo I - Tabela de Valores para Serviços Adicionais",
+          "descricao": "Tabela detalhada com valores para serviços não incluídos no escopo principal",
+          "identificador": "CONT-2024-0157-A1"
+        },
+        {
+          "titulo": "Anexo II - Escopo Detalhado dos Serviços",
+          "descricao": "Detalhamento das atividades, entregas e critérios de aceitação",
+          "identificador": "CONT-2024-0157-A2"
+        },
+        {
+          "titulo": "Anexo III - Política de Confidencialidade",
+          "descricao": "Detalhamento das obrigações de confidencialidade e sigilo",
+          "identificador": "CONT-2024-0157-A3"
+        }
+      ],
+      "palavras_chave": ["consultoria jurídica", "direito empresarial", "análise contratual", "prestação de serviços", "confidencialidade", "êxito", "honorários"]
+    }
+  ]
+}
