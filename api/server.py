@@ -3,6 +3,9 @@ from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 import os
 import json
+import logging
+import datetime
+import sys
 from core.summarizer import Summarizer
 
 def fix_encoding_recursive(data):
@@ -33,11 +36,62 @@ def fix_encoding(text):
             else:
                 return text
         except Exception as e:
-            print(f'Encoding fix failed: {e}')
+            logger.warning(f'Encoding fix failed: {e}')
             return text
 import threading
 import time
+# Configure JSON logging
+class JSONFormatter(logging.Formatter):
+    def format(self, record):
+        log_record = {
+            "timestamp": datetime.datetime.now().isoformat(),
+            "level": record.levelname,
+            "module": record.module,
+            "function": record.funcName,
+            "line": record.lineno,
+            "message": record.getMessage()
+        }
+        
+        # Add exception info if present
+        if record.exc_info:
+            log_record["exception"] = {
+                "type": record.exc_info[0].__name__,
+                "message": str(record.exc_info[1]),
+                "traceback": self.formatException(record.exc_info)
+            }
+            
+        return json.dumps(log_record)
+
+# Set up the logger
+logger = logging.getLogger("tiko")
+logger.setLevel(logging.INFO)
+
+# Create a handler for console output
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setFormatter(JSONFormatter())
+logger.addHandler(console_handler)
+
+# Create a file handler if logs directory exists
+logs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'logs'))
+if not os.path.exists(logs_dir):
+    os.makedirs(logs_dir)
+    
+file_handler = logging.FileHandler(os.path.join(logs_dir, f"tiko_{datetime.datetime.now().strftime('%Y%m%d')}.log"))
+file_handler.setFormatter(JSONFormatter())
+logger.addHandler(file_handler)
+
+# Initialize the Flask app
 app = Flask(__name__)
+
+# Add request logging middleware
+@app.before_request
+def log_request_info():
+    logger.info(f"Request: {request.method} {request.path} - Headers: {dict(request.headers)}")
+
+@app.after_request
+def log_response_info(response):
+    logger.info(f"Response: {response.status} - Size: {response.content_length}")
+    return response
 
 # Load configuration
 config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'config.json'))
@@ -63,9 +117,9 @@ def monitor_config():
                     config = new_config
                     summarizer = Summarizer(config)
                     config_mtime = current_mtime
-                    print('Configuration updated')
+                    logger.info('Configuration updated')
         except Exception as e:
-            print(f'Error monitoring config: {e}')
+            logger.error(f'Error monitoring config: {e}', exc_info=True)
             time.sleep(1)
 
 config_thread = threading.Thread(target=monitor_config, daemon=True)
@@ -80,19 +134,57 @@ import requests
 
 def get_input_file(req):
     """Gets the input file from the request. If there is a 'url' field in the form and it's a URL, downloads the content and saves it to a temporary file. Otherwise, uses request.files['file']."""
+    # First, check if URL is provided in form data
     url = req.form.get('url', '').strip()
+    
+    # If not in form, check if it's in query parameters
+    if not url:
+        url = req.args.get('url', '').strip()
+    
     if url and url.startswith(('http://', 'https://')):
-        filename = url.rstrip('/').split('/')[-1] or 'downloaded_content'
-        filename = secure_filename(filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        # Generate a unique filename to avoid conflicts
+        import uuid
+        import datetime
+        
+        # Get the filename from URL or use a timestamp + UUID
         try:
-            r = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"})
+            url_filename = url.rstrip('/').split('/')[-1]
+            # If URL ends with / or has no identifiable filename
+            if not url_filename or url_filename.find('.') == -1:
+                timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+                url_filename = f"url_content_{timestamp}_{str(uuid.uuid4())[:8]}"
+        except:
+            timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+            url_filename = f"url_content_{timestamp}_{str(uuid.uuid4())[:8]}"
+        
+        filename = secure_filename(url_filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        
+        # Add request headers to simulate a browser
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1"
+        }
+        
+        try:
+            logger.info(f"Downloading content from URL: {url}")
+            r = requests.get(url, headers=headers, timeout=30)
             r.raise_for_status()
+            
+            # If the response is empty, raise an exception
+            if not r.content:
+                raise Exception("Empty response received from URL")
+                
             with open(file_path, 'wb') as f:
                 f.write(r.content)
+                
+            logger.info(f"URL content saved to: {file_path} (Size: {len(r.content)} bytes)")
             return file_path
         except Exception as e:
-            print(f"Error downloading file from URL {url}: {e}")
+            logger.error(f"Error downloading file from URL {url}: {e}", exc_info=True)
             return None
     elif 'file' in req.files and req.files['file'].filename:
         file_obj = req.files['file']

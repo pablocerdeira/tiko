@@ -43,6 +43,7 @@ def generate_json(llm, text, graph_type):
             "3. Do not create or invent new fields that are not in the chosen model.\n"
             "4. Do not fill fields with information that is not in the document.\n"
             "5. Do not invent doctrines, jurisprudence, or citations if they are not in the document. If there are no doctrines, jurisprudence, or citations, simply do not return these fields in the json.\n"
+            "6. IMPORTANT: Always fill in the content using the same language as the input document. If the document is in Portuguese, the JSON content must be in Portuguese. If the document is in English, the JSON content must be in English. The structure names (keys) remain the same, but the values should be in the document's original language.\n"
             "Below are the models:\n\n" + templates_str
         )},
         {"role": "user", "content": (

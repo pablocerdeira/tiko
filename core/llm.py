@@ -53,11 +53,15 @@ class LLM:
         headers = {'Content-Type': 'application/json'}
         if self.api_key:
             headers['Authorization'] = f"Bearer {self.api_key}"
-
+            
+        # Add language instruction to the system prompt
+        language_instruction = "IMPORTANT: Always respond in the same language as the input text. Maintain the original language of the document in your response."
+        enhanced_system_prompt = f"{self.system_prompt}\n\n{language_instruction}"
+        
         body = {
             'model': self.model,
             'messages': [
-                {'role': 'system', 'content': self.system_prompt},
+                {'role': 'system', 'content': enhanced_system_prompt},
                 {'role': 'user', 'content': text}
             ],
             'temperature': self.temperature,
