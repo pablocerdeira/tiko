@@ -2,8 +2,14 @@ AI.md
 TODO.md
 *.pyc
 .pytest_cache/
+logs/*
 tmp/
 test_files/
 uploads/*
 config.json
 .env
+ontology.md
+codex.md
+tokens.json
+server_output_new.log
+logs/tiko_20250426.log

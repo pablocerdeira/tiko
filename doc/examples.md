@@ -23,7 +23,7 @@ curl -X POST -F "url=https://example.com/page.html" http://localhost:9999/extrac
 #### Summarize a PDF File
 
 ```bash
-curl -X POST -F "file=@/path/to/document.pdf" http://localhost:9999/summary
+ -X POST -F "file=@/path/to/document.pdf"curl http://localhost:9999/summary
 ```
 
 #### Summarize a URL
