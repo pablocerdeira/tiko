@@ -14,10 +14,10 @@ This system serves as an essential backend service for chat bots, document manag
  
  ## Endpoints
  
- - **/summary**: Accepts a file or URL (via form field `file` or `url`) and returns a concise summary using a configurable LLM.
- - **/extract**: Accepts a file or URL and returns the extracted text without summarization.
- - **/json**: Accepts a file or URL and returns an ontological JSON structure based on the document type.
- - **/health**: Returns the status of the server.
+ - **/summary**: Accepts a file or URL (via form field `file` or `url`) and returns a concise summary using a configurable LLM. Requires a valid token.
+ - **/extract**: Accepts a file or URL and returns the extracted text without summarization. Requires a valid token.
+ - **/json**: Accepts a file or URL and returns an ontological JSON structure based on the document type. Requires a valid token.
+ - **/health**: Returns the status and version of the server. Requires a valid token.
  
 ## Configuration
 
@@ -116,13 +116,13 @@ Each provider can be configured independently. Adjust the parameters as needed b
  You can pass a URL directly to either endpoint. For instance, to summarize the content of a web page:
 
  ```bash
- curl -F "url=https://example.com" http://<server-address>:<port>/summary
+ curl -F "url=https://example.com" "http://<server-address>:<port>/summary?token=YOUR_API_TOKEN"
  ```
 
  And to extract the full text from a URL:
 
  ```bash
- curl -F "url=https://example.com" http://<server-address>:<port>/extract
+ curl -F "url=https://example.com" "http://<server-address>:<port>/extract?token=YOUR_API_TOKEN"
  ```
 
 ### Using Files
@@ -134,13 +134,13 @@ The endpoints also accept file uploads. Below are examples for different file ty
 To summarize a PDF document:
 
 ```bash
-curl -X POST -F "file=@/path/to/document.pdf" http://<server-address>:<port>/summary
+curl -X POST -F "file=@/path/to/document.pdf" "http://<server-address>:<port>/summary?token=YOUR_API_TOKEN"
 ```
 
 To extract the full text from a PDF:
 
 ```bash
-curl -X POST -F "file=@/path/to/document.pdf" http://<server-address>:<port>/extract
+curl -X POST -F "file=@/path/to/document.pdf" "http://<server-address>:<port>/extract?token=YOUR_API_TOKEN"
 ```
 
 #### DOCX Files
@@ -148,13 +148,13 @@ curl -X POST -F "file=@/path/to/document.pdf" http://<server-address>:<port>/ext
 To summarize a DOCX file:
 
 ```bash
-curl -X POST -F "file=@/path/to/document.docx" http://<server-address>:<port>/summary
+curl -X POST -F "file=@/path/to/document.docx" "http://<server-address>:<port>/summary?token=YOUR_API_TOKEN"
 ```
 
 To extract text from a DOCX file:
 
 ```bash
-curl -X POST -F "file=@/path/to/document.docx" http://<server-address>:<port>/extract
+curl -X POST -F "file=@/path/to/document.docx" "http://<server-address>:<port>/extract?token=YOUR_API_TOKEN"
 ```
 
 #### Images
@@ -162,18 +162,24 @@ curl -X POST -F "file=@/path/to/document.docx" http://<server-address>:<port>/ex
 For image files, Tiko can perform OCR to extract text. To summarize an image:
 
 ```bash
-curl -X POST -F "file=@/path/to/image.jpg" http://<server-address>:<port>/summary
+curl -X POST -F "file=@/path/to/image.jpg" "http://<server-address>:<port>/summary?token=YOUR_API_TOKEN"
 ```
 
 And to extract text using OCR:
 
 ```bash
-curl -X POST -F "file=@/path/to/image.png" http://<server-address>:<port>/extract
+curl -X POST -F "file=@/path/to/image.png" "http://<server-address>:<port>/extract?token=YOUR_API_TOKEN"
 ```
 
-### Custom Request Overrides
+### Custom Request Parameters
 
-#### Summary Endpoint Overrides
+#### Authentication
+
+All endpoints require a valid authentication token passed as a URL query parameter:
+
+ - ?token=<your_token> : Your API access token. This is required for all API calls.
+
+#### Summary Endpoint Parameters
 
 The /summary endpoint supports per-request customization of the LLM settings via URL query parameters. You can override default LLM settings as follows:
 
@@ -181,16 +187,16 @@ The /summary endpoint supports per-request customization of the LLM settings via
 
  - ?api_key=<your_api_key> : Provides a specific API key for the LLM provider for that request. This is useful if you want to use dynamic credentials.
 
-#### JSON Endpoint Overrides
+#### JSON Endpoint Parameters
 
 The /json endpoint supports the following parameter:
 
  - ?type=<document_type> : Suggests the document type for more accurate JSON generation. Possible values include 'contrato', 'decisao', 'leis_normas', 'parecer', 'peticao', or 'geral'.
 
-For example, to override both the model and API key, you can use:
+For example, to make a request with both authentication and parameter overrides:
 
 ```bash
-curl -X POST -F "file=@/path/to/document.pdf" "http://<server-address>:<port>/summary?model=gpt-4&api_key=YOUR_API_KEY"
+curl -X POST -F "file=@/path/to/document.pdf" "http://<server-address>:<port>/summary?token=YOUR_API_TOKEN&model=gpt-4&api_key=YOUR_API_KEY"
 ```
 
 When these parameters are provided, Tiko creates a temporary summarizer instance with the overrides applied, ensuring that the request uses the specified settings without affecting the global configuration.
@@ -210,4 +216,4 @@ Tiko is designed to run on systems with Python 3.8+ and is compatible with vario
 
 This project is open source. See LICENSE for more information.
  
- version: 0.4.1
+ version: 0.5.1

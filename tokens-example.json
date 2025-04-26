@@ -1,0 +1,19 @@
+{
+  "tokens": {
+    "exampleToken123": {
+      "name": "Example User",
+      "created": "2025-04-26",
+      "active": true
+    },
+    "devToken456": {
+      "name": "Development Team",
+      "created": "2025-04-26",
+      "active": true
+    },
+    "testToken789": {
+      "name": "Test User",
+      "created": "2025-04-26",
+      "active": true
+    }
+  }
+}

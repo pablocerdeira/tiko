@@ -1,66 +1,15 @@
-# api/server.py
 from flask import Flask, request, jsonify
-from werkzeug.utils import secure_filename
 import os
 import json
 import logging
 import datetime
 import sys
-from core.summarizer import Summarizer
-
-def fix_encoding_recursive(data):
-    # Applies fix_encoding recursively to strings inside dicts and lists
-    if isinstance(data, str):
-        return fix_encoding(data)
-    elif isinstance(data, dict):
-        return {key: fix_encoding_recursive(value) for key, value in data.items()}
-    elif isinstance(data, list):
-        return [fix_encoding_recursive(item) for item in data]
-    else:
-        return data
-import chardet
-
-def fix_encoding(text):
-    """Attempt to fix mis-encoded text by re-encoding from latin1 to utf-8 if the result seems improved."""
-    try:
-        import ftfy
-        return ftfy.fix_text(text)
-    except ImportError:
-        # Fallback method if ftfy is not available
-        try:
-            fixed = text.encode('latin1').decode('utf-8')
-            non_ascii_original = sum(1 for c in text if ord(c) > 127)
-            non_ascii_fixed = sum(1 for c in fixed if ord(c) > 127)
-            if non_ascii_fixed < non_ascii_original:
-                return fixed
-            else:
-                return text
-        except Exception as e:
-            logger.warning(f'Encoding fix failed: {e}')
-            return text
 import threading
 import time
-# Configure JSON logging
-class JSONFormatter(logging.Formatter):
-    def format(self, record):
-        log_record = {
-            "timestamp": datetime.datetime.now().isoformat(),
-            "level": record.levelname,
-            "module": record.module,
-            "function": record.funcName,
-            "line": record.lineno,
-            "message": record.getMessage()
-        }
-        
-        # Add exception info if present
-        if record.exc_info:
-            log_record["exception"] = {
-                "type": record.exc_info[0].__name__,
-                "message": str(record.exc_info[1]),
-                "traceback": self.formatException(record.exc_info)
-            }
-            
-        return json.dumps(log_record)
+import functools
+from core.summarizer import Summarizer
+from core.web_extractor import get_input_file
+from core.utils import fix_encoding_recursive, JSONFormatter
 
 # Set up the logger
 logger = logging.getLogger("tiko")
@@ -75,10 +24,90 @@ logger.addHandler(console_handler)
 logs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'logs'))
 if not os.path.exists(logs_dir):
     os.makedirs(logs_dir)
-    
+
 file_handler = logging.FileHandler(os.path.join(logs_dir, f"tiko_{datetime.datetime.now().strftime('%Y%m%d')}.log"))
 file_handler.setFormatter(JSONFormatter())
 logger.addHandler(file_handler)
+
+# Load tokens from tokens.json
+tokens_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'tokens.json'))
+tokens = {}
+
+def load_tokens():
+    """Load tokens from tokens.json file"""
+    global tokens
+    try:
+        if os.path.exists(tokens_path):
+            with open(tokens_path, 'r') as f:
+                tokens_data = json.load(f)
+                tokens = tokens_data.get('tokens', {})
+                logger.info(f"Loaded {len(tokens)} tokens from tokens.json")
+        else:
+            logger.warning(f"Tokens file not found at {tokens_path}")
+    except Exception as e:
+        logger.error(f"Error loading tokens: {e}", exc_info=True)
+
+# Load tokens initially
+load_tokens()
+
+# Set up token file monitoring
+tokens_mtime = os.path.getmtime(tokens_path) if os.path.exists(tokens_path) else 0
+tokens_lock = threading.Lock()
+
+def monitor_tokens():
+    """Monitor tokens.json for changes and reload when needed"""
+    global tokens, tokens_mtime
+    while True:
+        try:
+            time.sleep(5)  # Check every 5 seconds
+            if os.path.exists(tokens_path):
+                current_mtime = os.path.getmtime(tokens_path)
+                if current_mtime != tokens_mtime:
+                    with tokens_lock:
+                        load_tokens()
+                        tokens_mtime = current_mtime
+                        logger.info('Tokens updated')
+        except Exception as e:
+            logger.error(f'Error monitoring tokens: {e}', exc_info=True)
+            time.sleep(5)
+
+tokens_thread = threading.Thread(target=monitor_tokens, daemon=True)
+tokens_thread.start()
+
+def require_token(f):
+    """Decorator to require token authentication"""
+    @functools.wraps(f)
+    def decorated_function(*args, **kwargs):
+        # Check if auth is enabled in config
+        auth_enabled = config.get('auth', {}).get('enabled', True)
+        if not auth_enabled:
+            return f(*args, **kwargs)
+            
+        # Check if this endpoint is excluded from authentication
+        endpoint = request.path
+        exclude_endpoints = config.get('auth', {}).get('exclude_endpoints', [])
+        if endpoint in exclude_endpoints:
+            return f(*args, **kwargs)
+            
+        token = request.args.get('token')
+        
+        if not token:
+            logger.warning(f"Unauthorized access attempt: No token provided - {request.method} {request.path}")
+            return jsonify({"error": "Unauthorized - Token required"}), 401
+        
+        if token not in tokens:
+            logger.warning(f"Unauthorized access attempt: Invalid token - {request.method} {request.path}")
+            return jsonify({"error": "Unauthorized - Invalid token"}), 401
+            
+        token_info = tokens[token]
+        if not token_info.get('active', False):
+            logger.warning(f"Unauthorized access attempt: Inactive token - {request.method} {request.path}")
+            return jsonify({"error": "Unauthorized - Token inactive"}), 401
+            
+        # Log token usage
+        logger.info(f"Token used: {token_info.get('name', 'Unknown')} - {request.method} {request.path}")
+        return f(*args, **kwargs)
+    return decorated_function
 
 # Initialize the Flask app
 app = Flask(__name__)
@@ -130,199 +159,102 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-import requests
-
-def get_input_file(req):
-    """Gets the input file from the request. If there is a 'url' field in the form and it's a URL, downloads the content and saves it to a temporary file. Otherwise, uses request.files['file']."""
-    # First, check if URL is provided in form data
-    url = req.form.get('url', '').strip()
-    
-    # If not in form, check if it's in query parameters
-    if not url:
-        url = req.args.get('url', '').strip()
-    
-    if url and url.startswith(('http://', 'https://')):
-        # Generate a unique filename to avoid conflicts
-        import uuid
-        import datetime
-        
-        # Get the filename from URL or use a timestamp + UUID
-        try:
-            url_filename = url.rstrip('/').split('/')[-1]
-            # If URL ends with / or has no identifiable filename
-            if not url_filename or url_filename.find('.') == -1:
-                timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-                url_filename = f"url_content_{timestamp}_{str(uuid.uuid4())[:8]}"
-        except:
-            timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-            url_filename = f"url_content_{timestamp}_{str(uuid.uuid4())[:8]}"
-        
-        filename = secure_filename(url_filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        
-        # Add request headers to simulate a browser
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-            "Accept-Language": "en-US,en;q=0.5",
-            "Connection": "keep-alive",
-            "Upgrade-Insecure-Requests": "1"
-        }
-        
-        try:
-            logger.info(f"Downloading content from URL: {url}")
-            r = requests.get(url, headers=headers, timeout=30)
-            r.raise_for_status()
-            
-            # If the response is empty, raise an exception
-            if not r.content:
-                raise Exception("Empty response received from URL")
-                
-            with open(file_path, 'wb') as f:
-                f.write(r.content)
-                
-            logger.info(f"URL content saved to: {file_path} (Size: {len(r.content)} bytes)")
-            return file_path
-        except Exception as e:
-            logger.error(f"Error downloading file from URL {url}: {e}", exc_info=True)
-            return None
-    elif 'file' in req.files and req.files['file'].filename:
-        file_obj = req.files['file']
-        filename = secure_filename(file_obj.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file_obj.save(file_path)
-        return file_path
-    else:
-        return None
-
-@app.route('/summary', methods=['POST'])
-def summarize():
-    # Get file from 'file' field or URL provided via form ('url')
-    file_path = get_input_file(request)
-    if not file_path:
-        msg = 'No valid file or URL provided'
-        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
-
-    # Retrieve optional overrides
-    model_override = request.args.get('model')
-    api_key_override = request.args.get('api_key')
-    if model_override or api_key_override:
-        temp_summarizer = Summarizer(config)
-        if model_override:
-            temp_summarizer.llm.model = model_override
-        if api_key_override:
-            temp_summarizer.llm.api_key = api_key_override
-        sch = temp_summarizer
-    else:
-        sch = summarizer
-
-    result = sch.summarize_file(file_path)
-    result = fix_encoding(result)
-    os.remove(file_path)
-    return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 @app.route('/extract', methods=['POST'])
+@require_token
 def extract():
-    file_path = get_input_file(request)
+    file_path = get_input_file(request, app.config['UPLOAD_FOLDER'])
     if not file_path:
-        msg = 'No valid file or URL provided'
-        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
+        return 'No file or URL provided', 400
 
-    result = summarizer.extractor.extract_text_from_file(file_path)
-    if not result:
-        result = 'Unable to extract text from file.'
-    result = fix_encoding(result)
-    os.remove(file_path)
-    return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+    try:
+        text = summarizer.extractor.extract_text_from_file(file_path)
+        text = fix_encoding_recursive(text)
+        os.remove(file_path)
+        if not text:
+            return 'Failed to extract text', 500
+        return text, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+    except Exception as e:
+        logger.error(f"Error during extraction: {str(e)}", exc_info=True)
+        if file_path and os.path.exists(file_path):
+            os.remove(file_path)
+        return f"Internal server error: {str(e)}", 500
+
+@app.route('/summary', methods=['POST'])
+@require_token
+def summary():
+    logger.info(f"Summary request received: {request.method} {request.path}")
+    file_path = get_input_file(request, app.config['UPLOAD_FOLDER'])
+    if not file_path:
+        return 'No file or URL provided', 400
+
+    try:
+        # Use the summarizer to get the full summary
+        summary_text = summarizer.summarize_file(file_path)
+        # Clean up the file after processing
+        if file_path and os.path.exists(file_path):
+            os.remove(file_path)
+        
+        if not summary_text:
+            return 'Failed to generate summary', 500
+            
+        # Return the summary with appropriate headers
+        return summary_text, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+    except Exception as e:
+        logger.error(f"Error during summarization: {str(e)}", exc_info=True)
+        # Clean up the file if it exists
+        if file_path and os.path.exists(file_path):
+            os.remove(file_path)
+        return f"Internal server error: {str(e)}", 500
 
 @app.route('/health', methods=['GET'])
+@require_token
 def health():
-    return jsonify({'status': 'ok'})
+    return jsonify({
+        'status': 'ok',
+        'version': config.get('version', '0.5.1')
+    })
 
 @app.route('/json', methods=['POST'])
+@require_token
 def json_response():
     # Get file from 'file' field or via URL
-    file_path = get_input_file(request)
+    file_path = get_input_file(request, app.config['UPLOAD_FOLDER'])
     if not file_path:
-        msg = 'No valid file or URL provided'
-        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
+        return 'No file or URL provided', 400
 
-    # Extract text from file
-    text = summarizer.extractor.extract_text_from_file(file_path)
-    if not text:
-        os.remove(file_path)
-        msg = 'Could not extract text from file for JSON generation.'
-        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
-
-    # Generate JSON object using few-shot templates
-    from core.json import generate_json
     try:
+        # Extract text from file
+        text = summarizer.extractor.extract_text_from_file(file_path)
+        if not text:
+            os.remove(file_path)
+            return 'Could not extract text from file for JSON generation.', 400
+
+        # Generate JSON object using few-shot templates
+        from core.json import generate_json
         # Use the type parameter from request args if provided
         graph_type = request.args.get('type', '')
         result = generate_json(summarizer.llm, text, graph_type)
+        
         if result is None:
             os.remove(file_path)
-            msg = 'Error generating JSON from extracted text.'
-            return msg, 500, {'Content-Type': 'text/plain; charset=utf-8'}
+            return 'Error generating JSON from extracted text.', 500
+
+        # Apply recursive encoding fix if applicable
+        result = fix_encoding_recursive(result) if result else result
+
+        os.remove(file_path)
+
+        if isinstance(result, dict):
+            response_json = json.dumps(result, indent=2, ensure_ascii=False)
+            return response_json, 200, {'Content-Type': 'application/json; charset=utf-8'}
+        else:
+            return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
     except Exception as e:
-        os.remove(file_path)
-        msg = f'Error during JSON generation: {str(e)}'
-        return msg, 500, {'Content-Type': 'text/plain; charset=utf-8'}
-
-    # Apply recursive encoding fix if applicable
-    result = fix_encoding_recursive(result) if result else result
-
-    os.remove(file_path)
-
-    import json
-    if isinstance(result, dict):
-        response_json = json.dumps(result, indent=2, ensure_ascii=False)
-        return response_json, 200, {'Content-Type': 'application/json; charset=utf-8'}
-    else:
-        return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
-
-@app.route('/graph', methods=['POST'])
-def graph_response():
-    # Get file from 'file' field or via URL
-    file_path = get_input_file(request)
-    if not file_path:
-        msg = 'No valid file or URL provided'
-        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
-
-    # Extract text from file
-    text = summarizer.extractor.extract_text_from_file(file_path)
-    if not text:
-        os.remove(file_path)
-        msg = 'Could not extract text from file for graph generation.'
-        return msg, 400, {'Content-Type': 'text/plain; charset=utf-8'}
-
-    # Generate graph using GraphGenerator
-    from core.graph import GraphGenerator
-    try:
-        # Use the type parameter from request args if provided
-        graph_type = request.args.get('type', '')
-        graph_generator = GraphGenerator(summarizer.llm)
-        result = graph_generator.generate_graph(text, graph_type)
-        if result is None:
+        logger.error(f"Error during JSON generation: {str(e)}", exc_info=True)
+        if file_path and os.path.exists(file_path):
             os.remove(file_path)
-            msg = 'Error generating graph from extracted text.'
-            return msg, 500, {'Content-Type': 'text/plain; charset=utf-8'}
-    except Exception as e:
-        os.remove(file_path)
-        msg = f'Error during graph generation: {str(e)}'
-        return msg, 500, {'Content-Type': 'text/plain; charset=utf-8'}
-
-    # Apply recursive encoding fix if applicable
-    result = fix_encoding_recursive(result) if result else result
-
-    os.remove(file_path)
-
-    import json
-    if isinstance(result, dict):
-        response_json = json.dumps(result, indent=2, ensure_ascii=False)
-        return response_json, 200, {'Content-Type': 'application/json; charset=utf-8'}
-    else:
-        return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+        return f"Internal server error: {str(e)}", 500
 
 if __name__ == '__main__':
     srv = config.get('server', {})

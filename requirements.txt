@@ -1,0 +1,7 @@
+# Tiko Dependencies
+flask>=2.0.0
+werkzeug>=2.0.0
+requests>=2.25.0
+chardet>=4.0.0
+ftfy>=6.0.0
+beautifulsoup4>=4.9.0
