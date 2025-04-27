@@ -187,8 +187,12 @@ def get_input_file(req, upload_folder):
         if file.filename == '':
             logger.warning("Empty filename for uploaded file")
             return None
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(upload_folder, filename)
+        # Generate a unique filename with UUID to prevent collisions
+        original_filename = secure_filename(file.filename)
+        name, ext = os.path.splitext(original_filename)
+        unique_filename = f"{name}_{str(uuid.uuid4())[:8]}{ext}"
+        
+        file_path = os.path.join(upload_folder, unique_filename)
         file.save(file_path)
-        logger.info(f"File uploaded and saved to: {file_path}")
+        logger.info(f"File uploaded and saved to: {file_path} (original: {original_filename})")
         return file_path

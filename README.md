@@ -191,7 +191,9 @@ The /summary endpoint supports per-request customization of the LLM settings via
 
 The /json endpoint supports the following parameter:
 
- - ?type=<document_type> : Suggests the document type for more accurate JSON generation. Possible values include 'contrato', 'decisao', 'leis_normas', 'parecer', 'peticao', or 'geral'.
+ - ?type=<document_type> : Specifies the document type for more accurate JSON generation. 
+   - Standard types: 'contrato', 'decisao', 'leis_normas', 'parecer', 'peticao', or 'geral'
+   - Custom types: You can specify any type that matches files in the schemas directory. For example, using ?type=imoveis will use the models fewshot_ontology_imoveis.json and exemplo_ontology_imoveis.json if they exist.
 
 For example, to make a request with both authentication and parameter overrides:
 
@@ -216,4 +218,4 @@ Tiko is designed to run on systems with Python 3.8+ and is compatible with vario
 
 This project is open source. See LICENSE for more information.
  
- version: 0.5.1
+ version: 0.6.0

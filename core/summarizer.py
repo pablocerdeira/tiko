@@ -83,7 +83,10 @@ class Summarizer:
             prompt = ("From the summary below, produce a final summary that is cohesive and complete, including all relevant points, "
                       "names of main parties involved, and maintaining important details, preferably maintaining chronology, but eliminating repetitions and redundant or unnecessary information. "
                       "Summary: " + summary)
-            final_summary = self.llm.summarize(prompt)
+            if self.llm_refiner is not None:
+                final_summary = self.llm_refiner.summarize(prompt)
+            else:
+                final_summary = self.llm.summarize(prompt)
             if final_summary:
                 summary = final_summary
 

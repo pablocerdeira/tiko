@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  tika:
+    image: apache/tika:2.9.1.0
+    ports:
+      - "9998:9998"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9998/version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  tiko:
+    build: .
+    ports:
+      - "9997:9997"
+    volumes:
+      - ./config.json:/app/config.json
+      - ./tokens.json:/app/tokens.json
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+    environment:
+      - TZ=America/Sao_Paulo
+    depends_on:
+      tika:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9997/health?token=DevInternal92461724618920"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

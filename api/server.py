@@ -232,8 +232,11 @@ def json_response():
 
         # Generate JSON object using few-shot templates
         from core.json import generate_json
+        
         # Use the type parameter from request args if provided
         graph_type = request.args.get('type', '')
+        logger.info(f"JSON request with type parameter: '{graph_type}'")
+        
         result = generate_json(summarizer.llm, text, graph_type)
         
         if result is None:

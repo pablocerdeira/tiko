@@ -1,0 +1,44 @@
+# Arquivos temporários e de cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Arquivos de logs e dados temporários
+logs/*
+tmp/*
+uploads/*
+
+# Arquivos específicos do projeto que não devem ir para o Docker
+.git
+.github
+.gitignore
+.vscode
+*.md
+!README.md
+server_output*.log
+*.log
+
+# Arquivos de configuração que devem ser montados como volumes
+config.json
+tokens.json
+
+# Exemplos e testes
+test_files/
