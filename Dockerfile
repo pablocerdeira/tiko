@@ -5,6 +5,8 @@ WORKDIR /app
 # Instalar dependências do sistema
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    curl \
+    ffmpeg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -15,7 +17,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar todo o código da aplicação
-COPY . .
+COPY ./app .
 
 # Criar diretórios necessários
 RUN mkdir -p logs uploads tmp

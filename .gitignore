@@ -13,3 +13,7 @@ codex.md
 tokens.json
 server_output_new.log
 logs/tiko_20250426.log
+logs/
+__pycache__/
+*.pyc
+tmp/

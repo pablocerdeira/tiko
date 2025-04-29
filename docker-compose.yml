@@ -1,18 +1,6 @@
 version: '3.8'
 
 services:
-  tika:
-    image: apache/tika:2.9.1.0
-    ports:
-      - "9998:9998"
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9998/version"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-
   tiko:
     build: .
     ports:
@@ -22,15 +10,22 @@ services:
       - ./tokens.json:/app/tokens.json
       - ./logs:/app/logs
       - ./uploads:/app/uploads
+      - /home/pablo.cerdeira/miniconda3:/opt/miniconda3
+      - /home/pablo.cerdeira/.cache/whisper:/root/.cache/whisper
     environment:
       - TZ=America/Sao_Paulo
-    depends_on:
-      tika:
-        condition: service_healthy
+      - PATH=/opt/miniconda3/bin:$PATH
+      - PYTHONPATH=/opt/miniconda3/lib/python3.12/site-packages
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9997/health?token=DevInternal92461724618920"]
+      test: ["CMD", "curl", "-f", "http://10.10.10.10:9997/health?token=DevInternal92461724618920"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - local
+
+networks:
+  local:
+    external: true
