@@ -1,0 +1,65 @@
+# ~/.codex/tools.yaml
+
+tools:
+  # ——— Ferramentas internas padrão ———
+  - name: shell-default
+    description: "Executa comandos de shell genéricos"
+    command: /bin/sh
+    arguments:
+      - "-c"
+      - "{{command}}"
+    input_via: args
+    output_includes_stderr: true
+    timeout: 30s
+
+  - name: git
+    description: "Interage com repositórios Git"
+    command: git
+    arguments:
+      - "{{command}}"
+    input_via: args
+    timeout: 15s
+
+  - name: fs
+    description: "Lê e grava arquivos no sistema de arquivos"
+    command: codex-fs
+    arguments:
+      - "{{command}}"
+    input_via: stdin
+    timeout: 15s
+
+  - name: http
+    description: "Faz requisições HTTP GET/POST"
+    command: codex-http
+    arguments:
+      - "{{command}}"
+    input_via: stdin
+    timeout: 20s
+
+  - name: openai
+    description: "Chama diretamente a API da OpenAI"
+    command: codex-openai
+    arguments:
+      - "{{command}}"
+    input_via: stdin
+    timeout: 30s
+
+  # ——— Shell customizado ———
+  - name: shell
+    description: "Executa qualquer comando de shell"
+    command: /bin/bash
+    arguments:
+      - "-c"
+      - "{{command}}"
+    input_via: args
+    output_includes_stderr: true
+    timeout: 30s
+
+  - name: sed
+    description: "Executa o sed"
+    command: /bin/sed
+    arguments:
+      - "{{commandLine}}"
+    input_via: args
+    output_includes_stderr: true
+    timeout: 30s
